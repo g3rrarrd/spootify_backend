@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,24 +12,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_USUARIO_RED_SOCIAL")
+@Table(name = "TBL_PRODUCTORES")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Usuario_red_social {
+public class Productores {
     
     @Id
-    @ManyToOne
-    @JoinColumn(name = "id_red_social")
-    private Tipo_red_social red_social;
+    @Column(name = "id_productor")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idProductor;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Artistas artistas;
+    private String primer_nombre;
 
-    private String user_name;
+    private String segundo_nombre;
 
+    private String apellido;
 }

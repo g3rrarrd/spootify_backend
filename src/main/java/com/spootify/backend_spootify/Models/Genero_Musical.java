@@ -36,6 +36,8 @@ public class Genero_Musical {
     private String nombreGeneroMusical;
 
   
+    @OneToMany(mappedBy = "genero_musical")
+    private List<Canciones> canciones;
 
     
 }

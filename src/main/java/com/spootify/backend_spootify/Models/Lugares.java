@@ -27,9 +27,9 @@ public class Lugares {
 
     private String nombre_luagr;
 
-    private Number latitud;
+    private float latitud;
 
-    private Number longitud;
+    private float longitud;
 
     private int id_pais;
 }

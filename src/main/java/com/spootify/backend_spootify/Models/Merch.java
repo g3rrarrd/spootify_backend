@@ -1,12 +1,14 @@
 package com.spootify.backend_spootify.Models;
 
 import java.sql.Clob;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,8 +35,11 @@ public class Merch {
 
     private Clob descripcion_merch;
 
-    private Number precio_merch;
+    private float precio_merch;
 
-    private Number stock_merch;
+    private float stock_merch;
+
+    @OneToMany(mappedBy = "merch")
+    private List<Artistas> artistas;
 
 }

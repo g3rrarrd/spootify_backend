@@ -27,9 +27,9 @@ public class Pago_Planes {
 
     private String nombre_plan;
 
-    private Number precio;
+    private float precio;
 
-    private Number usuarios_admitidos;
+    private float usuarios_admitidos;
 
     private int duracion_plan;
 

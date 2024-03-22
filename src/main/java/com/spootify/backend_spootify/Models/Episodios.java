@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_EPISODIOS")
+@Table(name = "TBL_EPISODIO")
 @Data
 @Builder
 @NoArgsConstructor

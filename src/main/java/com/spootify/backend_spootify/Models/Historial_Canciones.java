@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +25,14 @@ import lombok.NoArgsConstructor;
 public class Historial_Canciones {
     
     @Id
-    @Column(name = "id_historial_de_reproduccion")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idHistorialRepr;
+    @ManyToOne
+    @JoinColumn(name = "id_historial_repr")
+    private Historial_reproduccion historial_reproduccion;
 
-    private int id_media;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "id_media")
+    private Canciones canciones;
 
     private Date fecha_reproduccion;
 

@@ -1,10 +1,18 @@
 package com.spootify.backend_spootify.Models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,20 +29,43 @@ import lombok.NoArgsConstructor;
 public class Canciones {
     
     @Id
-    @Column(name = "id_media")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCanciones;
+    @OneToOne
+    @JoinColumn(name = "id_media")
+    private Media media;
 
     private String letra_cancion;
 
-    private int id_album;
+    @ManyToOne
+    @JoinColumn(name = "id_genero_musical")
+    private Genero_Musical genero_musical;
 
-    private int id_genero_musical;
+    @ManyToOne
+    @JoinColumn(name = "id_album")
+    private Albumes id_album;
 
-    private int id_creditos_musicales;
+    @ManyToMany(mappedBy = "canciones")
+    private List<Generos> generos;
 
-    private int id_usuario;
+    @ManyToOne
+    @JoinColumn(name = "id_creditos_musicales")
+    private Creditos creditos;
 
-    private int id_idioma;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Artistas artistas;
+
+    @ManyToOne
+    @JoinColumn(name = "id_idioma")
+    private Idiomas idiomas;
+
+    @ManyToMany
+    @JoinTable(name = "TBL_CANCIONES_ARTISTAS", joinColumns = @JoinColumn(name = "id_media"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+    private List<Artistas> artistasmany;
+ 
+    @OneToMany(mappedBy = "canciones")
+    private List<Historial_Canciones> historial_canciones;
+
+    @ManyToMany(mappedBy = "canciones")
+    private List<Listas_reproduccion> listas_reproduccions;
     
 }
