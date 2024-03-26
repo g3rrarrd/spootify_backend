@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,14 +25,21 @@ import lombok.NoArgsConstructor;
 public class Listas_seguidas {
     
     @Id
-    @Column(name = "id_lista_reproduccion")
+    @Column(name = "id_lista_seguidas")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idListaRepr;
 
     private Date fecha_seguimiento;
 
-    private int id_usuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario_Estandar usuario_estandar;
 
-    private int id_rol;
+    @ManyToOne
+    @JoinColumn(name = "id_rol")
+    private Rol_lista rol;
 
+    @ManyToOne
+    @JoinColumn(name = "id_lista_reproduccion")
+    private Listas_reproduccion lista_reproduccion;
 }

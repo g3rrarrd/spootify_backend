@@ -1,10 +1,13 @@
 package com.spootify.backend_spootify.Models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +33,7 @@ public class Productores {
     private String segundo_nombre;
 
     private String apellido;
+
+    @OneToMany(mappedBy = "productores")
+    private List<Creditos> creditos;
 }

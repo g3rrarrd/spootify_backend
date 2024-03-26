@@ -2,6 +2,8 @@ package com.spootify.backend_spootify.Models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,11 +27,19 @@ public class Idiomas {
     
     @Id
     @Column(name = "id_idioma")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idIdioma;
 
     private String nombre_idioma;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idiomas")
     private List<Canciones> canciones;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "idiomas")
+    private List<Podcasts> podcasts;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "idiomas")
+    private List<Paises> paises;
 }

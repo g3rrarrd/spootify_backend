@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -29,8 +31,6 @@ public class Merch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMerch;
 
-    private int id_talla;
-
     private String nombre_merch;
 
     private Clob descripcion_merch;
@@ -41,5 +41,9 @@ public class Merch {
 
     @OneToMany(mappedBy = "merch")
     private List<Artistas> artistas;
+
+    @ManyToOne
+    @JoinColumn(name = "id_talla")
+    private Tallas tallas;
 
 }

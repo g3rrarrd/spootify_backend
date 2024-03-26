@@ -20,32 +20,76 @@ public class Genero_Musical_Service_Impl implements Genero_Musical_Service{
 
     @Override
     public List<Genero_Musical> obtenerGenerosMusicales() {
-        return this.genero_Musical_Repository.findAll();
+        try {
+            return this.genero_Musical_Repository.findAll();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     @Transactional
-    public void insertargeneromusical(String Genero_Musical) {
+    public void insertargeneromusical(String genero_Musical) {
 
-        Genero_Musical genero = new Genero_Musical();
+        try {
+            Genero_Musical genero = new Genero_Musical();
 
-        if(!Genero_Musical.isEmpty()){
-            genero.setNombreGeneroMusical(Genero_Musical);
-            this.genero_Musical_Repository.save(genero);
+            if(!this.genero_Musical_Repository.findAll().isEmpty()){
+                if(!genero_Musical.isEmpty()){    
+                    genero.setIdGeneroMusical(this.genero_Musical_Repository.findAll().size() + 1);
+                }
+                
+            }else{
+                genero.setIdGeneroMusical(1);
+            }
+    
+            if(genero_Musical.length() > 0){
+                genero.setNombreGeneroMusical(genero_Musical);
+                this.genero_Musical_Repository.save(genero);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
-        List<Genero_Musical> generos = this.genero_Musical_Repository.findAll();
     }
 
     @Override
     public String obtenergeneromusical(int id) {
         
         if(id >= 0){
-         return this.genero_Musical_Repository.findById(id).get().getNombreGeneroMusical();
+         try {
+            return this.genero_Musical_Repository.findById(id).get().getNombreGeneroMusical();
+         } catch (Exception e) {
+            return String.format("Hubo un problema: %s", e.getMessage());
+
+         }
         }
 
     return null;
 
+    }
+
+    @Override
+    public void actualizargeneromusical(int id, String genero) {
+        try {
+            if(this.genero_Musical_Repository.findById(id).isPresent()){
+                Genero_Musical genero_Musical = this.genero_Musical_Repository.findById(id).get();
+                genero_Musical.setNombreGeneroMusical(genero);
+                this.genero_Musical_Repository.save(genero_Musical);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminargeneromusical(int id) {
+        try {
+            this.genero_Musical_Repository.deleteById(id);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
 

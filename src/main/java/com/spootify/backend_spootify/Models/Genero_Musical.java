@@ -29,13 +29,12 @@ public class Genero_Musical {
 
     @Id
     @Column(name = "id_genero_musical")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idGeneroMusical;
 
     @Column(name = "nombre_genero_musical")
     private String nombreGeneroMusical;
 
-  
+    @JsonIgnore
     @OneToMany(mappedBy = "genero_musical")
     private List<Canciones> canciones;
 

@@ -14,4 +14,8 @@ public interface Genero_Musical_Service {
 
     public String obtenergeneromusical(int id);
 
+    public void actualizargeneromusical(int id, String genero);
+
+    public void eliminargeneromusical(int id);
+
 }

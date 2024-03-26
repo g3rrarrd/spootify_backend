@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -38,8 +39,13 @@ public class Creditos {
 
     private int id_escritor;
 
-    private int id_productor;
-
     @OneToMany(mappedBy = "creditos")
     private List<Canciones> canciones;
+
+    @ManyToOne
+    @JoinColumn(name = "id_productor")
+    private Productores productores;
+
+    @ManyToMany(mappedBy = "creditos")
+    private List<Escritores> escritores;
 }

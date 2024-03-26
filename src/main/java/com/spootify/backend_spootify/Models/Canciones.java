@@ -43,9 +43,6 @@ public class Canciones {
     @JoinColumn(name = "id_album")
     private Albumes id_album;
 
-    @ManyToMany(mappedBy = "canciones")
-    private List<Generos> generos;
-
     @ManyToOne
     @JoinColumn(name = "id_creditos_musicales")
     private Creditos creditos;

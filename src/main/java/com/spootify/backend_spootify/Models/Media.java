@@ -43,4 +43,7 @@ public class Media {
     @OneToOne(mappedBy = "media")
     private Canciones canciones;
 
+    @OneToOne(mappedBy = "media")
+    private Episodios episodios;
+
 }

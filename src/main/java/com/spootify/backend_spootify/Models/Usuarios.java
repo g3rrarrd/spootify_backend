@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,8 +30,6 @@ public class Usuarios {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
 
-    private int id_genero;
-
     private String correo;
 
     private String nombre_usuario;
@@ -42,8 +42,20 @@ public class Usuarios {
 
     private String contrasenia;
 
-    private int id_pais;
+    @ManyToOne
+    @JoinColumn(name = "id_pais")
+    private Paises pais;
 
     @OneToOne(mappedBy = "usuarios")
     private Artistas artistas;
+
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
+
+    @OneToOne(mappedBy = "usuarios")
+    private Podcaster podcaster;
+
+    @OneToOne(mappedBy = "usuario")
+    private Usuario_Estandar usuario_Estandar;
 }

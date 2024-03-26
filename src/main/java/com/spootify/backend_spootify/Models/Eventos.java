@@ -34,12 +34,14 @@ public class Eventos {
     @JoinColumn(name = "id_usuario")
     private Artistas artistas;
 
-    private int id_lugar;
+    @ManyToOne
+    @JoinColumn(name = "id_lugar")
+    private Lugares lugares;
 
     private String nombre_evento;
 
     private Date fecha_evento;
 
-    private Clob url_ticket;
+    private Clob url_tickets;
 
 }
