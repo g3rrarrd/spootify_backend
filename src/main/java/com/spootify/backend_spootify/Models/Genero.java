@@ -25,7 +25,6 @@ public class Genero {
     
     @Id
     @Column(name = "id_genero")
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int idGenero;
 
     private String nombre_genero;

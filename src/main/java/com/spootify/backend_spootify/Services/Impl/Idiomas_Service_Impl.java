@@ -51,12 +51,12 @@ public class Idiomas_Service_Impl implements Idiomas_Service{
     }
 
     @Override
-    public String buscarIdioma(int id) {
+    public Idiomas buscarIdioma(int id) {
         
         try {    
-            return this.idiomaReposiory.findById(id).get().getNombre_idioma();
+            return this.idiomaReposiory.findById(id).get();
         } catch (Exception e) {
-            return String.format("Hubo un error: %s", e.getMessage());
+            return null;
         }
 
     }

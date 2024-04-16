@@ -32,7 +32,7 @@ public class Idiomas_Controller {
     }
 
     @GetMapping("/buscar")
-    public String buscarIdioma(@RequestParam(name = "id") int id){
+    public Idiomas buscarIdioma(@RequestParam(name = "id") int id){
         return this.idiomas_Service_Impl.buscarIdioma(id);
     }
 

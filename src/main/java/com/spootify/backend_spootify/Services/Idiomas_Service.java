@@ -10,7 +10,7 @@ public interface Idiomas_Service {
 
     public void insertarIdioma(String idioma);
 
-    public String buscarIdioma(int id);
+    public Idiomas buscarIdioma(int id);
 
     public void actualizarIdioma(int id, String idioma);
 

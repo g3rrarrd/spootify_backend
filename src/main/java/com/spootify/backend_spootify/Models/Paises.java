@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import oracle.sql.BLOB;
 
 @Entity
 @Table(name = "TBL_PAISES")
@@ -28,14 +29,13 @@ public class Paises {
     
     @Id
     @Column(name = "id_pais")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPais;
 
     private String nombre_pais;
 
     private String abreviacion_pais;
 
-    private Clob icono_pais;
+    private BLOB icono_pais;
 
     @ManyToOne
     @JoinColumn(name = "id_idioma")
