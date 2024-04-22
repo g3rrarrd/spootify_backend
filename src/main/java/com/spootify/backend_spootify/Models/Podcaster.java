@@ -27,19 +27,13 @@ import lombok.NoArgsConstructor;
 public class Podcaster {
     
     @Id
+    private int id_usuario;
+    
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
     private Usuarios usuarios;
 
-    private String nombre;
-
-    private String apellido;
-
-    @OneToMany(mappedBy = "podcaster")
-    private List<Podcasts> podcasts;
-
-    @ManyToOne
-    @JoinColumn(name = "id_podcast")
-    private Podcasts podcast;
+    @OneToMany(mappedBy = "podcasters")
+    private List<Podcasts> podcast;
 
 }

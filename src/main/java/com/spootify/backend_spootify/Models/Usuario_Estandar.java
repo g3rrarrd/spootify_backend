@@ -28,16 +28,14 @@ import lombok.NoArgsConstructor;
 public class Usuario_Estandar {
     
     @Id
+    private int id_usuario;
+
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
     private Usuarios usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_plan")
-    private Plan plan;
-
-    @ManyToOne
-    @JoinColumn(name = "id_historial_repr")
+    @JoinColumn(name = "id_historial_de_reproduccion")
     private Historial_reproduccion hisotrial_reproduccion;
 
     @OneToMany(mappedBy = "usuario_estandar")
@@ -48,10 +46,6 @@ public class Usuario_Estandar {
 
     @OneToOne (mappedBy = "usuario_estandar")
     private Pago_Planes pago_planes;
-
-    @ManyToOne
-    @JoinColumn(name = "id_plan_pagado")
-    private Pago_Planes pago_planesmany;
 
     @OneToMany(mappedBy = "usuario_estandar")
     private List<Listas_seguidas> listas_seguidas;

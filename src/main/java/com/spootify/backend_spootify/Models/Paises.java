@@ -29,7 +29,7 @@ public class Paises {
     
     @Id
     @Column(name = "id_pais")
-    private Long idPais;
+    private int idPais;
 
     private String nombre_pais;
 

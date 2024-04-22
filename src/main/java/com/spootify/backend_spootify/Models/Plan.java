@@ -46,8 +46,4 @@ public class Plan {
     @OneToMany (mappedBy = "plan")
     private List<Pago_Planes> pago_Planes;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "plan")
-    private List<Usuario_Estandar> usuario_estandar;
-
 }

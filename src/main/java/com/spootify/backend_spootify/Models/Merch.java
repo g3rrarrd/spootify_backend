@@ -39,8 +39,11 @@ public class Merch {
 
     private float stock_merch;
 
-    @OneToMany(mappedBy = "merch")
-    private List<Artistas> artistas;
+    private int id_artista;
+
+    @ManyToOne
+    @JoinColumn(name = "id_artista", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    private Artistas artistas;
 
     @ManyToOne
     @JoinColumn(name = "id_talla")

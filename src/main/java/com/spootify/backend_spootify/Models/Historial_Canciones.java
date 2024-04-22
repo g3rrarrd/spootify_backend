@@ -25,8 +25,10 @@ import lombok.NoArgsConstructor;
 public class Historial_Canciones {
     
     @Id
+    private int id_historial_reproduccion;
+
     @ManyToOne
-    @JoinColumn(name = "id_historial_repr")
+    @JoinColumn(name = "id_historial_reproduccion", referencedColumnName = "id_historial_reproduccion", insertable = false, updatable = false)
     private Historial_reproduccion historial_reproduccion;
 
     @Id

@@ -27,7 +27,10 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     @Query(value = "select count(1) from tbl_canciones where id_album = :id", nativeQuery = true)
     int contarCanciones(@Param("id") int id);
 
-    @Query(value = "select nombre_media, duracion_media, reproduccion_media, letra_cancion from tbl_canciones a inner join tbl_media b on a.id_media = b.id_media where id_album = :id", nativeQuery = true)
+    @Query(value = "update tbl_albumes set cantidad_canciones = :canciones where id_album = :id", nativeQuery = true)
+    void actualizarCantidadCanciones(@Param("canciones") int canciones, @Param("id") int id);
+
+    @Query(value = "select nombre_media, duracion_media, letra_cancion, color from tbl_canciones a inner join tbl_media b on a.id_media = b.id_media where id_album = :id", nativeQuery = true)
     List<String> obtenerCanciones(@Param("id")int id);
 
     @Query(value = "select duracion from tbl_albumes where id_album = :id", nativeQuery = true)

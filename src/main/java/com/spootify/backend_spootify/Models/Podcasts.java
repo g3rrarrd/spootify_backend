@@ -33,7 +33,9 @@ public class Podcasts {
 
     private String url_portada_podcast;
 
-    private Clob descripcion_podcast;
+    private String descripcion_podcast;
+
+    private String color;
 
     @OneToMany(mappedBy = "podcast")
     private List<Episodios> episodios;
@@ -42,10 +44,11 @@ public class Podcasts {
     @JoinColumn(name = "id_idioma")
     private Idiomas idiomas;
 
-    @OneToMany(mappedBy = "podcast")
-    private List<Podcaster> podcasters;
+    @ManyToOne
+    @JoinColumn(name = "id_podcaster")
+    private Podcaster podcasters;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Podcaster podcaster;
+    @JoinColumn(name = "id_genero_podcast")
+    private Genero_Podcast genero_podcast;
 }

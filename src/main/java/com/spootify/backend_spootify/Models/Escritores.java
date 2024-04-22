@@ -2,6 +2,8 @@ package com.spootify.backend_spootify.Models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +30,6 @@ public class Escritores {
     
     @Id
     @Column(name = "id_escritor")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEscritor;
 
     private String primer_nombre;
@@ -36,8 +38,8 @@ public class Escritores {
 
     private String apellido;
 
-    @ManyToMany
-    @JoinTable(name = "TBL_ESCRITORES_CANCIONES", joinColumns = @JoinColumn(name = "id_escritor"), inverseJoinColumns = @JoinColumn(name = "id_creditos_musicales"))
-    private List<Creditos> creditos;
+    @OneToMany(mappedBy = "escritores")
+    @JsonIgnore
+    private List<Escritores_Canciones> escritores_Canciones;
 
 }

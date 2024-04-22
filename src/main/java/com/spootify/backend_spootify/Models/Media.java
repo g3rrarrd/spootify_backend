@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,7 +27,6 @@ public class Media {
     
     @Id
     @Column(name = "id_media")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMedia;
 
     @Column(name = "nombre_media")
@@ -34,7 +35,7 @@ public class Media {
     @Column(name = "duracion_media")
     private Integer duracionMedia;
 
-    @Column(name = "reproduccion_media")
+    @Column(name = "reproducciones_media")
     private Integer ReproduccionMedia;
 
     @Column(name = "fecha_publicacion")
@@ -45,5 +46,9 @@ public class Media {
 
     @OneToOne(mappedBy = "media")
     private Episodios episodios;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_media")
+    private Tipo_Media tipo_media;
 
 }

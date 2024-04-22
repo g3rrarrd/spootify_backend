@@ -10,8 +10,4 @@ public interface Idiomas_Service {
 
     public Idiomas buscarIdioma(int id);
 
-    public int obtenerIdIdioma(String idioma);
-
-    
-
 }

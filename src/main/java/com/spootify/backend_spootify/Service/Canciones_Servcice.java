@@ -2,14 +2,19 @@ package com.spootify.backend_spootify.Service;
 
 import java.util.Map;
 
+import com.spootify.backend_spootify.Dtos.artistaDto;
+import com.spootify.backend_spootify.Dtos.cancionesDto;
+
 public interface Canciones_Servcice {
     
     public String traerPortada(int id);
 
     public String traerNombreCancion(int id);
 
-    public Map<String, String> traerArtistaCancion(int id);
+    public String traerColor(int id);
 
-    public Map<String, String> traerInformacionCreditos(int id);
+    public artistaDto traerArtistaCancion(int id);
+
+    public cancionesDto traerInformacionCreditos(int id);
 
 }

@@ -1,11 +1,15 @@
 package com.spootify.backend_spootify.Service.Impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spootify.backend_spootify.Dtos.artistaDto;
+import com.spootify.backend_spootify.Dtos.cancionesDto;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
 import com.spootify.backend_spootify.Service.Canciones_Servcice;
 
@@ -36,19 +40,16 @@ public class Canciones_Service_Impl implements Canciones_Servcice{
     }
 
     @Override
-    public Map<String, String> traerArtistaCancion(int id) {
+    public artistaDto traerArtistaCancion(int id) {
         try {
             
                 String[] parteArtista = this.canciones_Repository.obtenerArtista(id).split(",");
-                String[] partes = {"Nombre", "Foto", "Biografia", "FechaNacimiento"};
-                Map<String, String> artista = new HashMap<String, String>();
+                artistaDto artista = new artistaDto();
 
-                int i = 0;
-
-                for (String artistaInfo : parteArtista) {
-                        artista.put(partes[i], artistaInfo);
-                        i++;
-                }
+                artista.setNombre(parteArtista[0]);
+                artista.setFoto(parteArtista[1]);
+                artista.setBiografia(parteArtista[2]);
+                artista.setFechaNacimiento(parteArtista[3]);
 
                 return artista;
 
@@ -59,24 +60,33 @@ public class Canciones_Service_Impl implements Canciones_Servcice{
     }
 
     @Override
-    public Map<String, String> traerInformacionCreditos(int id) {
+    public cancionesDto traerInformacionCreditos(int id) {
        try {
-            String[] parteCreditos = this.canciones_Repository.obtenerInfoCredito(id).split(",");
-            String[] partes = {"NombreProducto", "NombreEscritor", "NombreArtista", "FirmaDiscografica"};
-            Map<String, String> creditos = new HashMap<String, String>();
+            String[] parteCreditos = this.canciones_Repository.obtenerInfoCreditoProductoresArtista(id).split(",");
+            List<String> partesEscritores = this.canciones_Repository.obtenerEscritores(id);
+            cancionesDto cancionesDto = new cancionesDto();
 
-            int i = 0;
+            cancionesDto.setProductor(parteCreditos[0]);
+            cancionesDto.setArtista(parteCreditos[1]);
+            cancionesDto.setFirmaDiscografica(parteCreditos[2]);
+            cancionesDto.setEscritores(partesEscritores);
 
-            for (String infoCredito : parteCreditos) {
-                creditos.put(partes[i], infoCredito);
-                i++;
-            }
-
-            return creditos;
+            return cancionesDto;
 
        } catch (Exception e) {
+        e.printStackTrace();
         return null;
        }
+    }
+
+    @Override
+    public String traerColor(int id) {
+        try {
+           return this.canciones_Repository.traerColor(id);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.Models.Artistas;
 import com.spootify.backend_spootify.Models.Canciones;
@@ -100,19 +101,19 @@ public class Albumes_Service_Impl implements Albumes_Service{
     }
 
     @Override
-    public Map<String, String> traerArtistaFoto(int id) {
+    public albumesDto traerArtistaFoto(int id) {
         
         try {
             
             if(this.albumes_Repository.findById(id).isPresent()){
             
-                Map<String, String> map = new HashMap<String, String>();
+                albumesDto albumArt = new albumesDto();
                 String[] artistas = this.albumes_Repository.obtenerNombreFotoArtista(id).split(",");
 
-                map.put("Nombre", artistas[0]);
-                map.put("Foto", artistas[1]);
-
-                return map;
+                albumArt.setNombreArtista(artistas[0]);
+                albumArt.setFotoArtista(artistas[1]);
+                
+                return albumArt;
 
             }
 
@@ -146,22 +147,23 @@ public class Albumes_Service_Impl implements Albumes_Service{
     }
 
     @Override
-    public List<Map<String,String>> traerCancionesAlbum(int id) {
+    public List<albumesDto> traerCancionesAlbum(int id) {
        
         try {
 
             if(this.albumes_Repository.contarCanciones(id) > 0){
                 List<String> cancionesList = this.albumes_Repository.obtenerCanciones(id);
-                List<Map<String, String>> canciones = new ArrayList<Map<String, String>>();
+                List<albumesDto> canciones = new LinkedList<>();
 
                 for (String cancion : cancionesList) {
                     String[] partesCancion = cancion.split(",");
-                    Map<String, String> cancionMap = new HashMap<String, String>();
-                    cancionMap.put("Nombre", partesCancion[0]);
-                    cancionMap.put("Duracion", partesCancion[1]);
-                    cancionMap.put("reproducciones", partesCancion[2]);
-                    cancionMap.put("letra", partesCancion[3]);
-                    canciones.add(cancionMap);
+                    albumesDto album = new albumesDto();
+                    album.setNombreCancion(partesCancion[0]);
+                    album.setDuracion(partesCancion[1]);
+                    album.setLetra(partesCancion[2]);
+                    album.setColor(partesCancion[3]);
+
+                    canciones.add(album);
                 }
 
                 return canciones;
@@ -215,12 +217,15 @@ public class Albumes_Service_Impl implements Albumes_Service{
     public int traerCantidadCacionesAlbum(int id) {
        
         try {
-            return this.albumes_Repository.contarCanciones(id);
+            int canciones = this.albumes_Repository.contarCanciones(id);
+            return canciones;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
     }
+
+    
     
 }

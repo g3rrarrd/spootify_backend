@@ -2,6 +2,7 @@ package com.spootify.backend_spootify.Models;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -22,19 +23,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(ArtistasId.class)
 public class Artistas {
     
     @Id
-    private int idUsuario;
+    private int id_usuario;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
     private Usuarios usuarios;
 
-    @ManyToOne
-    @JoinColumn(name = "id_merch")
-    private Merch merch;
+   @OneToMany(mappedBy = "artistas")
+   private List<Merch> merch;
+
+   private String color;
 
     private int oyentes_mensuales;
 
@@ -55,6 +56,6 @@ public class Artistas {
     @OneToMany(mappedBy = "artistas")
     private List<Usuario_red_social> usuario_red_socials;
 
-    @ManyToMany(mappedBy = "artistasmany")
-    private List<Canciones> cancionesmany;
+    @OneToMany(mappedBy = "artistas")
+    private List<Canciones_Artista> canciones_Artistas;
 }

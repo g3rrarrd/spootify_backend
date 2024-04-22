@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_HISTORiAL_REPRODUCCION")
+@Table(name = "TBL_HISTORiAL_DE_REPRODUCCION")
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,8 +26,7 @@ import lombok.NoArgsConstructor;
 public class Historial_reproduccion {
     
     @Id
-    @Column(name = "id_historial_repr")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historial_reproduccion")
     private int id_HistorialRepr;
 
 

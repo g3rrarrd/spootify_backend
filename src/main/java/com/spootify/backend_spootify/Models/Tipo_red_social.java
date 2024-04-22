@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class Tipo_red_social {
     
     @Id
-    @Column(name = "id_red_social")
+    @Column(name = "id_tipo_red_social")
     private int idRedSocial;
 
     private String nombre_red_social;

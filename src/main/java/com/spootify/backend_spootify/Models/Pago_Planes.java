@@ -42,11 +42,12 @@ public class Pago_Planes {
     @JoinColumn(name = "id_usuario")
     private Usuario_Estandar usuario_estandar;
 
-    @OneToMany(mappedBy = "pago_planesmany")
-    private List<Usuario_Estandar> usuario_estandarmany;
-
     @ManyToOne
     @JoinColumn(name = "id_plan")
     private Plan plan;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tarjeta")
+    private Tarjetas tarjetas;
 
 }

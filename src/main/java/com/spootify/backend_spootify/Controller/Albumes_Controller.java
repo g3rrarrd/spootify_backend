@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.Models.Canciones;
 import com.spootify.backend_spootify.Service.Impl.Albumes_Service_Impl;
@@ -42,7 +43,7 @@ public class Albumes_Controller {
     }
 
     @GetMapping("/buscarArtista")
-    public Map<String, String> traerArtistaFoto(@RequestParam int id){
+    public albumesDto traerArtistaFoto(@RequestParam int id){
         return this.asi.traerArtistaFoto(id);
     }
 
@@ -52,7 +53,7 @@ public class Albumes_Controller {
     }
 
     @GetMapping("/buscarCanciones")
-    public List<Map<String,String>> trearCancionesAlbumm(@RequestParam int id){
+    public List<albumesDto> trearCancionesAlbumm(@RequestParam int id){
         return this.asi.traerCancionesAlbum(id);
     }
 

@@ -40,11 +40,9 @@ public class Listas_reproduccion {
 
     private Integer cantidad_canciones;
 
-    private Integer duracion_lista_reproduccion;
 
-    @ManyToMany
-    @JoinTable(name = "TBL_LISTAS_CANCIONES", joinColumns = @JoinColumn(name = "id_lista_reproduccion"), inverseJoinColumns = @JoinColumn(name = "id_media"))
-    private List<Canciones> canciones;
+    @OneToMany(mappedBy = "listas_reproduccion")
+    private List<Listas_Canciones> listas_Canciones;
 
     @OneToMany(mappedBy = "lista_reproduccion")
     private List<Listas_seguidas> listas_seguidas;

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spootify.backend_spootify.Dtos.artistaDto;
+import com.spootify.backend_spootify.Dtos.cancionesDto;
 import com.spootify.backend_spootify.Service.Impl.Canciones_Service_Impl;
 
 @RestController
@@ -28,12 +30,12 @@ public class Canciones_Controller {
     }
 
     @GetMapping("/traerArtista")
-    public Map<String,String> traerArtistaCancion(@RequestParam int id){
+    public artistaDto traerArtistaCancion(@RequestParam int id){
         return this.csi.traerArtistaCancion(id);
     }
 
     @GetMapping("/traerCreditos")
-    public Map<String, String> traerInformacionCreditos(@RequestParam int id){
+    public cancionesDto traerCancionesDto(@RequestParam int id){
         return this.csi.traerInformacionCreditos(id);
     }
 

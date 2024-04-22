@@ -1,14 +1,15 @@
 package com.spootify.backend_spootify.Models;
 
-import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,28 +17,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_LISTAS_SEGUIDAS")
+@Table(name = "TBL_LISTAS_Y_CANCIONES")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Listas_seguidas {
+public class Listas_Canciones {
     
     @Id
-    private int id_lista_reproduccion;
+    @Column(name = "id_lista_reproduccion")
+    private int idListaRepr;
 
-    private Date fecha_seguimiento;
+    @Id
+    @Column(name = "id_cancion")
+    private int idCanciones;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario_Estandar usuario_estandar;
-
-    @ManyToOne
-    @JoinColumn(name = "id_rol")
-    private Rol_lista rol;
+    @JoinColumn(name = "id_cancion", referencedColumnName = "id_media", insertable = false, updatable = false)
+    @JsonIgnore
+    private Canciones canciones;
 
     @ManyToOne
     @JoinColumn(name = "id_lista_reproduccion", referencedColumnName = "id_lista_reproduccion", insertable = false, updatable = false)
-    private Listas_reproduccion lista_reproduccion;
+    @JsonIgnore
+    private Listas_reproduccion listas_reproduccion;
+
 }

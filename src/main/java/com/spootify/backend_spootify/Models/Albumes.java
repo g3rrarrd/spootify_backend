@@ -36,11 +36,9 @@ public class Albumes {
 
     private String portada;
 
-    private Integer duracion;
-
     private Date fecha_lanzamiento;
 
-    private Integer cantidad_canciones;
+    private String color;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

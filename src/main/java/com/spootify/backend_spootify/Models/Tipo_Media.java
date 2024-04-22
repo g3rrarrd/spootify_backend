@@ -2,9 +2,6 @@ package com.spootify.backend_spootify.Models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -15,22 +12,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_GENERO")
 @Data
 @Builder
+@Table(name = "TBL_TIPO_MEDIA")
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Genero {
+public class Tipo_Media {
     
     @Id
-    @Column(name = "id_genero")
-    private int idGenero;
+    private int id_tipo_media;
 
-    private String nombre_genero;
+    private String tipo_media;
 
-    @OneToMany(mappedBy = "genero")
-    @JsonIgnore
-    private List<Usuarios> usuarios;
+    @OneToMany(mappedBy = "tipo_media")
+    private List<Media> medias;
 
 }

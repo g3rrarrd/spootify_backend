@@ -15,21 +15,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_GENERO")
 @Data
+@Table(name = "TBL_TIPO_USUARIO")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Genero {
+public class Tipo_usuarios {
     
     @Id
-    @Column(name = "id_genero")
-    private int idGenero;
+    @Column(name = "id_tipo_usuario")
+    private int idTipoUsuario;
 
-    private String nombre_genero;
+    @Column(name = "tipo_usuario")
+    private int tipo_usuario;
 
-    @OneToMany(mappedBy = "genero")
+    @OneToMany(mappedBy = "tipo_usuarios")
     @JsonIgnore
     private List<Usuarios> usuarios;
 

@@ -28,14 +28,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(value = cancionesId.class)
 public class Canciones {
     
     @Id
-    private int idCanciones;
+    private int id_cancion;
 
     @OneToOne
-    @JoinColumn(name = "id_media")
+    @JoinColumn(name = "id_media", referencedColumnName = "id_media", insertable = false, updatable = false)
     @JsonIgnore
     private Media media;
 
@@ -68,16 +67,16 @@ public class Canciones {
     @JsonIgnore
     private Idiomas idiomas;
 
-    @ManyToMany
-    @JoinTable(name = "TBL_CANCIONES_ARTISTAS", joinColumns = @JoinColumn(name = "id_media"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
-    private List<Artistas> artistasmany;
+    @OneToMany(mappedBy = "canciones")
+    @JsonIgnore
+    private List<Canciones_Artista> canciones_Artista;
  
     @OneToMany(mappedBy = "canciones")
     @JsonIgnore
     private List<Historial_Canciones> historial_canciones;
 
-    @ManyToMany(mappedBy = "canciones")
+    @OneToMany(mappedBy = "canciones")
     @JsonIgnore
-    private List<Listas_reproduccion> listas_reproduccions;
+    private List<Listas_Canciones> listas_Canciones;
     
 }
