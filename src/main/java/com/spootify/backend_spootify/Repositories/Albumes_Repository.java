@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.spootify.backend_spootify.Models.Albumes;
-import com.spootify.backend_spootify.Models.Artistas;
-import com.spootify.backend_spootify.Models.Canciones;
 
 public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     

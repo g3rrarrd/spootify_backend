@@ -153,6 +153,7 @@ public class Albumes_Service_Impl implements Albumes_Service{
 
             if(this.albumes_Repository.contarCanciones(id) > 0){
                 List<String> cancionesList = this.albumes_Repository.obtenerCanciones(id);
+                System.out.println(cancionesList);
                 List<albumesDto> canciones = new LinkedList<>();
 
                 for (String cancion : cancionesList) {
