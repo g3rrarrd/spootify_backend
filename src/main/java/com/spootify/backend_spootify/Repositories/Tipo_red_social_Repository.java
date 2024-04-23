@@ -1,7 +1,6 @@
 package com.spootify.backend_spootify.Repositories;
 
 import java.sql.Blob;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,9 +1,6 @@
 package com.spootify.backend_spootify.OracleData;
 
-import java.io.File;
 import java.util.Base64;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * oracle

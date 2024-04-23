@@ -1,19 +1,14 @@
 package com.spootify.backend_spootify.Service.Impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
-import com.spootify.backend_spootify.Models.Artistas;
-import com.spootify.backend_spootify.Models.Canciones;
 import com.spootify.backend_spootify.Repositories.Albumes_Repository;
 import com.spootify.backend_spootify.Repositories.Artistas_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;

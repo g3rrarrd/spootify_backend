@@ -2,11 +2,9 @@ package com.spootify.backend_spootify.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
-import com.spootify.backend_spootify.Models.Canciones;
 
 public interface Albumes_Service {
 

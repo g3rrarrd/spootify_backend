@@ -5,16 +5,13 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spootify.backend_spootify.Dtos.usuarioDto;
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
-import com.spootify.backend_spootify.Models.Usuarios;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Usuarios_Service;

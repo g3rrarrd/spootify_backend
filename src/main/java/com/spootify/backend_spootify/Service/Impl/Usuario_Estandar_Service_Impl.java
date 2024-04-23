@@ -3,24 +3,18 @@ package com.spootify.backend_spootify.Service.Impl;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties.Cache.Connection;
 import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
-import com.spootify.backend_spootify.Models.Tipo_usuarios;
-import com.spootify.backend_spootify.Models.Usuarios;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Genero_Repository;
 import com.spootify.backend_spootify.Repositories.Paises_Repository;
 import com.spootify.backend_spootify.Repositories.Tipo_usuario_Repository;
-import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_estandar_Repository;
 import com.spootify.backend_spootify.Service.Usuario_estandar_Service;
 
