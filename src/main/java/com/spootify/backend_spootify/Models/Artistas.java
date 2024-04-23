@@ -37,9 +37,7 @@ public class Artistas {
 
    private String color;
 
-    private int oyentes_mensuales;
-
-    private String biografia;
+   private String biografia;
 
     @OneToMany(mappedBy = "artistas")
     private List<Albumes> albumes;

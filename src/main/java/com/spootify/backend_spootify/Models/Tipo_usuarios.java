@@ -27,7 +27,7 @@ public class Tipo_usuarios {
     private int idTipoUsuario;
 
     @Column(name = "tipo_usuario")
-    private int tipo_usuario;
+    private String tipo_usuario;
 
     @OneToMany(mappedBy = "tipo_usuarios")
     @JsonIgnore

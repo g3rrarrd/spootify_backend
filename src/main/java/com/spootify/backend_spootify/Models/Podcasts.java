@@ -45,7 +45,7 @@ public class Podcasts {
     private Idiomas idiomas;
 
     @ManyToOne
-    @JoinColumn(name = "id_podcaster")
+    @JoinColumn(name = "id_usuario")
     private Podcaster podcasters;
 
     @ManyToOne
