@@ -10,6 +10,4 @@ public interface Tallas_Service {
 
     public Tallas buscarTalla(int id);
 
-    public int obtenerIdTalla(String nombre);
-
 }
