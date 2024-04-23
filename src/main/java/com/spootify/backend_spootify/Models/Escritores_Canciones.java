@@ -8,35 +8,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TBL_CANCIONES_ARTISTAS")
+@Table(name = "TBL_ESCRITORES_Y_CANCIONES")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Canciones_Artista {
+public class Escritores_Canciones {
     
     @Id
-    @Column(name = "id_usuario")
-    private int idUsuario;
+    @Column(name = "id_escritor")
+    private int idEscritor;
 
     @Id
-    @Column(name = "id_cancion")
-    private int idCanciones;
+    @Column(name = "id_creditos_musicales")
+    private int idCreditos;
 
     @ManyToOne
-    @JoinColumn(name = "id_cancion", referencedColumnName = "id_cancion", insertable = false, updatable = false)
+    @JoinColumn(name = "id_escritor", referencedColumnName = "id_escritor", insertable = false, updatable = false)
     @JsonIgnore
-    private Canciones canciones;
+    private Escritores escritores;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    @JoinColumn(name = "id_escritor", referencedColumnName = "id_creditos_musicales", insertable = false, updatable = false)
     @JsonIgnore
-    private Artistas artistas;
-
+    private Creditos creditos;
 }

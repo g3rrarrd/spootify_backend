@@ -33,7 +33,7 @@ public class Historial_Canciones {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "id_media")
+    @JoinColumn(name = "id_cancion")
     private Canciones canciones;
 
     private Date fecha_reproduccion;

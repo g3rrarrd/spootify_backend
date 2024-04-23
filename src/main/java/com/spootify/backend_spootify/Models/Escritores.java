@@ -38,4 +38,8 @@ public class Escritores {
 
     private String apellido;
 
+    @OneToMany(mappedBy = "escritores")
+    @JsonIgnore
+    private List<Escritores_Canciones> escritores_Canciones;
+
 }

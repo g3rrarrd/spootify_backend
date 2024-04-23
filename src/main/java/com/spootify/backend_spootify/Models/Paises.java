@@ -3,6 +3,8 @@ package com.spootify.backend_spootify.Models;
 import java.sql.Clob;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,12 +41,15 @@ public class Paises {
 
     @ManyToOne
     @JoinColumn(name = "id_idioma")
+    @JsonIgnore
     private Idiomas idiomas;
 
     @OneToMany(mappedBy = "paises")
+    @JsonIgnore
     private List<Lugares> lugares;
 
     @OneToMany(mappedBy = "pais")
+    @JsonIgnore
     private List<Usuarios> usuarios;
 
 }

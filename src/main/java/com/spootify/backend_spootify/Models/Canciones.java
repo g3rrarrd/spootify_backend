@@ -29,12 +29,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Canciones {
-
+    
     @Id
     private int id_cancion;
 
     @OneToOne
-    @JoinColumn(name = "id_media", referencedColumnName = "id_media", insertable = false, updatable = false)
+    @JoinColumn(name = "id_cancion", referencedColumnName = "id_cancion")
     @JsonIgnore
     private Media media;
 
@@ -51,7 +51,12 @@ public class Canciones {
     private Albumes id_album;
 
     @ManyToOne
-    @JoinColumn(name = "id_artista")
+    @JoinColumn(name = "id_creditos_musicales")
+    @JsonIgnore
+    private Creditos creditos;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
     @JsonIgnore
     private Artistas artistas;
 

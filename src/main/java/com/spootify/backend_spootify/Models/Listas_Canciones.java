@@ -33,7 +33,7 @@ public class Listas_Canciones {
     private int idCanciones;
 
     @ManyToOne
-    @JoinColumn(name = "id_cancion", referencedColumnName = "id_media", insertable = false, updatable = false)
+    @JoinColumn(name = "id_cancion", referencedColumnName = "id_cancion", insertable = false, updatable = false)
     @JsonIgnore
     private Canciones canciones;
 

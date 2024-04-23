@@ -37,7 +37,7 @@ public class Artistas {
 
    private String color;
 
-   private String biografia;
+    private String biografia;
 
     @OneToMany(mappedBy = "artistas")
     private List<Albumes> albumes;
