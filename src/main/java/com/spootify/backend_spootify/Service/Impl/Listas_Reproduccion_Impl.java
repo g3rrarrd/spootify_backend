@@ -14,27 +14,5 @@ public class Listas_Reproduccion_Impl {
     
     
     
-        @Autowired
-        Idiomas_Repository ir;
-    
-        @Override
-        public List<Idiomas> obtenerIdiomas() {
-            try {
-                return this.ir.findAll();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-                return null;
-            }
-        }
-    
-        @Override
-        public Idiomas buscarIdioma(int id) {
-            try {
-                return this.ir.findById(id).get();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-                return null;
-            }
-        }
     
 }
