@@ -5,16 +5,24 @@ import lombok.Data;
 @Data
 public class albumesDto {
 
+    private String portadaAlbum;
+    
+    private String nombreAlbum;
+    
     private String nombreArtista;
 
     private String fotoArtista;
 
-    private String nombreCancion;
+    private String tipoLanzamiento;
 
-    private String duracion;
+    private String fechaLanzamiento;
 
-    private String letra;
+    private int cantidadCanciones;
+
+    private int duracionAlbum;
 
     private String color;
+
+    private boolean follow;
     
 }

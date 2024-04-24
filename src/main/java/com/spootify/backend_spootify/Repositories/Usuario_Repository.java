@@ -11,6 +11,9 @@ import com.spootify.backend_spootify.Models.Usuarios;
 
 public interface Usuario_Repository extends JpaRepository<Usuarios, Integer>{
     
+    @Query(value = "select nombre_usuario from tbl_usuarios where id_usuario = :id", nativeQuery = true)
+    String obtenerNombre(@RequestParam int id);
+
     @Query(value = "select count(1) from tbl_seguidores where id_usuario_seguido = :idSeguido and tbl_seguidores.id_usuario_seguidor = :idSeguidor", nativeQuery = true)
     int seSiguen(@RequestParam int idSeguido, @RequestParam int idSeguidor);
 

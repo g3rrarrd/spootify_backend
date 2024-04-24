@@ -10,6 +10,8 @@ public interface Albumes_Service {
 
     public List<Albumes> obtenerAlbumes();
 
+    public albumesDto traerInfoAlbum(int id);
+
     public Albumes buscarAlbumes(int id);
 
     public String traerPortadaAlbum(int id);

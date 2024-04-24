@@ -12,6 +12,7 @@ import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.Repositories.Albumes_Repository;
 import com.spootify.backend_spootify.Repositories.Artistas_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
+import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Albumes_Service;
 
 @Service
@@ -21,10 +22,35 @@ public class Albumes_Service_Impl implements Albumes_Service{
     Albumes_Repository albumes_Repository;
 
     @Autowired
-    Artistas_Repository artistas_Repository;
+    Usuario_Repository usuario_Repository;
 
     @Autowired
     Canciones_Repository canciones_Repository;
+
+    @Override
+    public albumesDto traerInfoAlbum(int id) {
+        try {
+            if (this.albumes_Repository.findById(id).isPresent()) {
+                albumesDto album = new albumesDto();
+                album.setNombreAlbum(albumes_Repository.obtenerNombre(id));
+                album.setPortadaAlbum(albumes_Repository.obtenerPortada(id));
+                album.setColor(albumes_Repository.obtenerColor(id));
+                album.setNombreArtista(usuario_Repository.obtenerNombre(id));
+                album.setFotoArtista(usuario_Repository.urlFotoPerfil(id));
+                album.setTipoLanzamiento(albumes_Repository.obtenerTipoLanzamiento(id));
+                album.setFechaLanzamiento(albumes_Repository.obtenerFechaLanzamiento(id));
+                album.setCantidadCanciones(albumes_Repository.contarCanciones(id));
+                album.setDuracionAlbum(albumes_Repository.obtenerDuracion(id));
+                                
+                return album;
+            }
+
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public List<Albumes> obtenerAlbumes() {
@@ -147,11 +173,11 @@ public class Albumes_Service_Impl implements Albumes_Service{
         try {
 
             if(this.albumes_Repository.contarCanciones(id) > 0){
-                List<String> cancionesList = this.albumes_Repository.obtenerCanciones(id);
-                System.out.println(cancionesList);
+                List<Object[]> cancionesList = this.albumes_Repository.obtenerCanciones(id);
+                System.out.println(cancionesList.get(0)[1]);
                 List<albumesDto> canciones = new LinkedList<>();
 
-                for (String cancion : cancionesList) {
+                /*for (String cancion : cancionesList) {
                     String[] partesCancion = cancion.split(",");
                     albumesDto album = new albumesDto();
                     album.setNombreCancion(partesCancion[0]);
@@ -160,7 +186,7 @@ public class Albumes_Service_Impl implements Albumes_Service{
                     album.setColor(partesCancion[3]);
 
                     canciones.add(album);
-                }
+                }*/
 
                 return canciones;
             }
@@ -196,7 +222,7 @@ public class Albumes_Service_Impl implements Albumes_Service{
         try {
             
             if(this.albumes_Repository.findById(id).isPresent()){
-                return this.albumes_Repository.obtenerDuracion(id);
+                //return this.albumes_Repository.obtenerDuracion(id);
             }
 
             return null;
