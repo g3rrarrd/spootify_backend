@@ -28,15 +28,13 @@ import lombok.NoArgsConstructor;
 public class Pago_Planes {
     
     @Id
-    @Column(name = "id_plan_pagado")
+    @Column(name = "id_plan_pago")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPlanPagado;
 
     private Date fecha_inicio_plan;
 
     private Date fecha_fin_plan;
-
-    private String referencia_bancaria;
 
     @OneToOne
     @JoinColumn(name = "id_usuario")

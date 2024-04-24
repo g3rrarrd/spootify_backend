@@ -45,10 +45,9 @@ public class Podcasts {
     private Idiomas idiomas;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Podcaster podcasters;
+    @JoinColumn(name = "id_podcaster", referencedColumnName = "id_usuario")
+    private Usuarios podcaster;
 
-    @ManyToOne
-    @JoinColumn(name = "id_genero_podcast")
-    private Genero_Podcast genero_podcast;
+    @OneToMany(mappedBy = "podcast")
+    private List<Podcasts_Generos> genero_podcast;
 }

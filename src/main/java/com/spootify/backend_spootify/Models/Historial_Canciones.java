@@ -2,10 +2,7 @@ package com.spootify.backend_spootify.Models;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -33,7 +30,7 @@ public class Historial_Canciones {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "id_cancion")
+    @JoinColumn(name = "id_media")
     private Canciones canciones;
 
     private Date fecha_reproduccion;

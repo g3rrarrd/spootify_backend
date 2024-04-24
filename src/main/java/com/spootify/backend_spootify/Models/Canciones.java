@@ -51,12 +51,7 @@ public class Canciones {
     private Albumes id_album;
 
     @ManyToOne
-    @JoinColumn(name = "id_creditos_musicales")
-    @JsonIgnore
-    private Creditos creditos;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_artista", referencedColumnName = "id_usuario")
     @JsonIgnore
     private Artistas artistas;
 

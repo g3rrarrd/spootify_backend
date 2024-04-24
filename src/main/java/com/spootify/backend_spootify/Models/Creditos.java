@@ -38,14 +38,16 @@ public class Creditos {
     @JoinColumn(name = "id_artista", referencedColumnName = "id_usuario", insertable =  false, updatable = false)
     private Artistas artistas;
 
-    @OneToMany(mappedBy = "creditos")
-    private List<Canciones> canciones;
+    @ManyToOne
+    @JoinColumn(name = "id_cancion")
+    private Canciones canciones;
 
     @ManyToOne
     @JoinColumn(name = "id_productor")
     private Productores productores;
 
-    @OneToMany(mappedBy = "creditos")
-    @JsonIgnore
-    private List<Escritores_Canciones> escritores_Canciones;
+    @ManyToOne
+    @JoinColumn(name = "id_escritor")
+    private Escritores escritores;
+
 }

@@ -55,9 +55,6 @@ public class Usuarios {
     @JoinColumn(name = "id_genero")
     private Genero genero;
 
-    @OneToOne(mappedBy = "usuarios")
-    private Podcaster podcaster;
-
     @OneToOne(mappedBy = "usuario")
     private Usuario_Estandar usuario_Estandar;
 

@@ -26,11 +26,11 @@ public class Canciones_Artista {
     private int idUsuario;
 
     @Id
-    @Column(name = "id_cancion")
-    private int idCanciones;
+    @Column(name = "id_media")
+    private int idCancion;
 
     @ManyToOne
-    @JoinColumn(name = "id_cancion", referencedColumnName = "id_cancion", insertable = false, updatable = false)
+    @JoinColumn(name = "id_media", referencedColumnName = "id_cancion", insertable = false, updatable = false)
     @JsonIgnore
     private Canciones canciones;
 

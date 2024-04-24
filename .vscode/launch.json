@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BackendSpootifyApplication<backend_spootify>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.spootify.backend_spootify.BackendSpootifyApplication",
+            "projectName": "backend_spootify",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
