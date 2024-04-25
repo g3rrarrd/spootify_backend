@@ -1,5 +1,7 @@
 package com.spootify.backend_spootify.Dtos;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -23,6 +25,7 @@ public class albumesDto {
 
     private String color;
 
-    private boolean follow;
-    
+    private int follow;
+
+    private List<CancionAlbumDto> canciones;
 }
