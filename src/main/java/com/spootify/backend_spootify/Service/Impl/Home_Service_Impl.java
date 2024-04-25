@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.artistaDto;
 import com.spootify.backend_spootify.Dtos.cancionDto;
+import com.spootify.backend_spootify.Dtos.episodiosDto;
 import com.spootify.backend_spootify.Dtos.homeDto;
 import com.spootify.backend_spootify.Dtos.listaReproduccionDto;
+import com.spootify.backend_spootify.Dtos.podcasterDto;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
@@ -38,6 +40,7 @@ public class Home_Service_Impl implements Home_Service{
             home.setCanciones(traerCanciones(id));
             home.setMixSeguidos(traerMixes());
             home.setPlaylistUsuario(traerPlaylist(id));
+            home.setPodcaster(traerPodcasters(id));
 
             return home;
 
@@ -57,7 +60,7 @@ public class Home_Service_Impl implements Home_Service{
             ResultSet rsCanciones = psCanciones.executeQuery();
             List<cancionDto> listCanciones = new LinkedList<>();
     
-            if(rsCanciones.next()){
+            while(rsCanciones.next()){
                 cancionDto cancion = new cancionDto();
                 artistaDto artista = new artistaDto();
     
@@ -93,7 +96,7 @@ public class Home_Service_Impl implements Home_Service{
             ResultSet rsMixes = psMixes.executeQuery();
             List<listaReproduccionDto> listRepro = new LinkedList<>();
 
-            if(rsMixes.next()){
+            while(rsMixes.next()){
                 listaReproduccionDto listaRepro = new listaReproduccionDto();
                 listaRepro.setIdLista(rsMixes.getInt(1));
                 listaRepro.setIdUsuarioPropietario(rsMixes.getInt(2));
@@ -122,7 +125,7 @@ public class Home_Service_Impl implements Home_Service{
             ResultSet rsPlay = psPlay.executeQuery();
             List<listaReproduccionDto> listRepro = new LinkedList<>();
 
-            if(rsPlay.next()){
+            while (rsPlay.next()){
                 listaReproduccionDto listaRepro = new listaReproduccionDto();
                 listaRepro.setIdLista(rsPlay.getInt(1));
                 listaRepro.setIdUsuarioPropietario(rsPlay.getInt(2));
@@ -140,6 +143,65 @@ public class Home_Service_Impl implements Home_Service{
             System.err.println(e.getMessage());
             return null;
         }        
+    }
+
+    private List<podcasterDto> traerPodcasters(int id){
+
+        try {
+            
+            Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            PreparedStatement psPod = conn.prepareStatement("select  b.id_usuario, b.nombre_usuario, b.url_foto_perfil from tbl_seguidores a inner join tbl_usuarios b on a.id_usuario_seguido = b.id_usuario where b.id_tipo_usuario = 3 and  id_usuario_seguidor = ?");
+            psPod.setInt(1, id);
+            ResultSet rsPod = psPod.executeQuery();
+            List<podcasterDto> listPodcasters = new LinkedList<>();
+
+            while(rsPod.next()){
+                podcasterDto usuario = new podcasterDto();
+
+                usuario.setId(rsPod.getInt(1));
+                usuario.setNombre(rsPod.getString(2));
+                usuario.setFoto(rsPod.getString(3));
+
+                usuario.setEpisodios(traerEpisodios(usuario.getId()));
+
+                listPodcasters.add(usuario);
+
+            }
+
+            return listPodcasters;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+    private List<episodiosDto> traerEpisodios(int id){
+        try {
+            
+            Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            PreparedStatement psEpi = conn.prepareStatement("select  a.id_episodio, b.nombre_podcast, a.descripcion_episodio, a.url_portada from tbl_episodio a inner join tbl_podcasts b on a.id_podcast = b.id_podcast inner join tbl_media c on a.id_episodio = c.id_media where b.id_podcaster = ? order by c.fecha_publicacion desc FETCH first 5 rows only");
+            psEpi.setInt(1, id);
+            ResultSet rsEpi = psEpi.executeQuery();
+            List<episodiosDto> listEpisodios = new LinkedList<>();
+
+            while(rsEpi.next()){
+                episodiosDto episodios = new episodiosDto();
+                episodios.setId(rsEpi.getInt(1));
+                episodios.setNombre(rsEpi.getString(2));
+                episodios.setDescripcion(rsEpi.getString(3));
+                episodios.setPortada(rsEpi.getString(4));
+
+                listEpisodios.add(episodios);
+            }
+
+            return listEpisodios;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     
 }
