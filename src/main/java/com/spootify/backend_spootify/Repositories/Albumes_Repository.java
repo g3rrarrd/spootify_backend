@@ -31,7 +31,7 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     @Query(value = "SELECT A.id_cancion, B.nombre_media FROM tbl_canciones A INNER JOIN tbl_media B ON(A.id_cancion = B.id_media) WHERE A.id_album = :id", nativeQuery = true)
     List<Object[]> obtenerCanciones(@Param("id")int id);
 
-    @Query(value = "select duracion from tbl_albumes where id_album = :id", nativeQuery = true)
+    @Query(value = "select sum(b.duracion_media) as duracion_album from tbl_canciones a inner join tbl_media b on(a.id_cancion = b.id_media) where a.id_album = :id", nativeQuery = true)
     int obtenerDuracion(@Param("id")int id);
 
     @Query(value = "select color from tbl_albumes where id_album = :id", nativeQuery = true)
@@ -40,4 +40,6 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     @Query(value = "select b.nombre_lanzamiento from tbl_albumes a inner join tbl_tipo_lanzamiento b on (a.id_tipo_lanzamiento = b.id_tipo_lanzamiento) where a.id_album = :id", nativeQuery = true)
     String obtenerTipoLanzamiento(@Param("id")int id);
 
+    @Query(value = "SELECT COUNT(1) AS seguido FROM tbl_usuarios A INNER JOIN tbl_albumes_seguidos B ON(A.id_usuario = B.id_usuario) WHERE A.id_usuario = :idUsuario AND B.id_album= :idAlbum", nativeQuery = true)
+    int seSigue(@Param("idUsuario")int idUsuario, @Param("idAlbum")int idAlbum);
 }

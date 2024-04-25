@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spootify.backend_spootify.Dtos.CancionAlbumDto;
 import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.Repositories.Albumes_Repository;
-import com.spootify.backend_spootify.Repositories.Artistas_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Albumes_Service;
@@ -28,20 +28,35 @@ public class Albumes_Service_Impl implements Albumes_Service{
     Canciones_Repository canciones_Repository;
 
     @Override
-    public albumesDto traerInfoAlbum(int id) {
+    public albumesDto traerInfoAlbum(int idAlbum, int idUsuario) {
         try {
-            if (this.albumes_Repository.findById(id).isPresent()) {
+            if (this.albumes_Repository.findById(idAlbum).isPresent()) {
+
                 albumesDto album = new albumesDto();
-                album.setNombreAlbum(albumes_Repository.obtenerNombre(id));
-                album.setPortadaAlbum(albumes_Repository.obtenerPortada(id));
-                album.setColor(albumes_Repository.obtenerColor(id));
-                album.setNombreArtista(usuario_Repository.obtenerNombre(id));
-                album.setFotoArtista(usuario_Repository.urlFotoPerfil(id));
-                album.setTipoLanzamiento(albumes_Repository.obtenerTipoLanzamiento(id));
-                album.setFechaLanzamiento(albumes_Repository.obtenerFechaLanzamiento(id));
-                album.setCantidadCanciones(albumes_Repository.contarCanciones(id));
-                album.setDuracionAlbum(albumes_Repository.obtenerDuracion(id));
-                                
+
+                album.setNombreAlbum(albumes_Repository.obtenerNombre(idAlbum));
+                album.setPortadaAlbum(albumes_Repository.obtenerPortada(idAlbum));
+                album.setColor(albumes_Repository.obtenerColor(idAlbum));
+                album.setNombreArtista(usuario_Repository.obtenerNombre(idAlbum));
+                album.setFotoArtista(usuario_Repository.urlFotoPerfil(idAlbum));
+                album.setTipoLanzamiento(albumes_Repository.obtenerTipoLanzamiento(idAlbum));
+                album.setFechaLanzamiento(albumes_Repository.obtenerFechaLanzamiento(idAlbum));
+                album.setCantidadCanciones(albumes_Repository.contarCanciones(idAlbum));
+                album.setDuracionAlbum(albumes_Repository.obtenerDuracion(idAlbum));
+                album.setFollow(albumes_Repository.seSigue(idUsuario, idAlbum));
+
+                List<Object[]> cancionesTraidas = albumes_Repository.obtenerCanciones(idAlbum);
+
+                List<CancionAlbumDto> cancionesEnviar = new LinkedList<CancionAlbumDto>();
+
+                for (Object[] cancion : cancionesTraidas) {
+                    CancionAlbumDto cancionDto = new CancionAlbumDto();
+                    cancionDto.setIdCancion(cancion[0].toString());
+                    cancionDto.setNombreCancion(cancion[1].toString());
+                    cancionesEnviar.add(cancionDto);
+                }
+                album.setCanciones(cancionesEnviar);
+                
                 return album;
             }
 

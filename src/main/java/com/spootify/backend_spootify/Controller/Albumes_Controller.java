@@ -20,6 +20,11 @@ public class Albumes_Controller {
     @Autowired
     Albumes_Service_Impl asi;
 
+    @GetMapping("/obtenerInfoAlbum")
+    public albumesDto obtenerInfoAlbum(@RequestParam int idAlbum, @RequestParam int idUsuario){
+        return this.asi.traerInfoAlbum(idAlbum, idUsuario);
+    }
+
     @GetMapping("/obtenerAlbumes")
     public List<Albumes> obtenerAlbumes(){
         return this.asi.obtenerAlbumes();

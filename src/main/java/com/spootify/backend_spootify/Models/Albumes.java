@@ -49,5 +49,8 @@ public class Albumes {
     @JsonIgnore
     private List<Canciones> canciones;
 
+    @OneToMany(mappedBy = "idAlbum")
+    @JsonIgnore
+    private List<Albumes_Seguidos> albumesSeguidos;
 
 }

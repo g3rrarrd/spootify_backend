@@ -67,4 +67,7 @@ public class Usuarios {
 
     @OneToMany(mappedBy = "usuarios2")
     private List<Seguidores> seguidos;
+
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Albumes_Seguidos> albumesSeguidos;
 }
