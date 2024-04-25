@@ -21,8 +21,6 @@ public class homeDto {
 
     private List<listaReproduccionDto> playlistUsuario;
 
-    private Usuarios podcaster;
-
-    private List<Episodios> episodios;
+    private List<podcasterDto> podcaster;
     
 }
