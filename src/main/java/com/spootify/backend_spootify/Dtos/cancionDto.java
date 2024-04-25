@@ -20,5 +20,7 @@ public class cancionDto {
     private int duracionMedia;
 
     private Integer reproduccionesMedia;
+
+    private String portada;
     
 }
