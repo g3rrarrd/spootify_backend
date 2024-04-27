@@ -33,12 +33,13 @@ public class Albumes_Service_Impl implements Albumes_Service{
             if (this.albumes_Repository.findById(idAlbum).isPresent()) {
 
                 albumesDto album = new albumesDto();
+                
 
                 album.setNombreAlbum(albumes_Repository.obtenerNombre(idAlbum));
                 album.setPortadaAlbum(albumes_Repository.obtenerPortada(idAlbum));
                 album.setColor(albumes_Repository.obtenerColor(idAlbum));
-                album.setNombreArtista(usuario_Repository.obtenerNombre(idAlbum));
-                album.setFotoArtista(usuario_Repository.urlFotoPerfil(idAlbum));
+                album.setNombreArtista(albumes_Repository.obtenerNombreArtista(idAlbum));
+                album.setFotoArtista(albumes_Repository.urlFotoPerfil(idAlbum));
                 album.setTipoLanzamiento(albumes_Repository.obtenerTipoLanzamiento(idAlbum));
                 album.setFechaLanzamiento(albumes_Repository.obtenerFechaLanzamiento(idAlbum));
                 album.setCantidadCanciones(albumes_Repository.contarCanciones(idAlbum));

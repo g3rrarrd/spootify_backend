@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spootify.backend_spootify.Models.Albumes;
 
@@ -42,4 +43,10 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
 
     @Query(value = "SELECT COUNT(1) AS seguido FROM tbl_usuarios A INNER JOIN tbl_albumes_seguidos B ON(A.id_usuario = B.id_usuario) WHERE A.id_usuario = :idUsuario AND B.id_album= :idAlbum", nativeQuery = true)
     int seSigue(@Param("idUsuario")int idUsuario, @Param("idAlbum")int idAlbum);
+
+    @Query(value = "select a.nombre_usuario from tbl_usuarios a inner join tbl_albumes b on(a.id_usuario=b.id_usuario) where b.id_album = :idAlbum", nativeQuery = true)
+    String obtenerNombreArtista(@RequestParam int idAlbum);
+
+    @Query(value = "select a.url_foto_perfil from tbl_usuarios a inner join tbl_albumes b on(a.id_usuario=b.id_usuario) where b.id_album = :idAlbum", nativeQuery = true)
+    String urlFotoPerfil(@RequestParam int idAlbum);
 }

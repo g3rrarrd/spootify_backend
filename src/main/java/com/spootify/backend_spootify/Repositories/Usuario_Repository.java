@@ -31,8 +31,4 @@ public interface Usuario_Repository extends JpaRepository<Usuarios, Integer>{
 
     @Query(value = "with seguidos as (select id_usuario_seguido, id_usuario_seguidor from tbl_seguidores where id_usuario_seguidor = :idSeguidor) select Nombre_usuario, url_foto_perfil from tbl_usuarios a inner join seguidos b on b.id_usuario_seguido = a.id_usuario ", nativeQuery = true)
     List<String> nombreSeguidos(@RequestParam int idSeguidor);
-
-    @Query(value = "select url_foto_perfil from tbl_usuarios where id_usuario = :id", nativeQuery = true)
-    String urlFotoPerfil(@RequestParam int id);
-
 }
