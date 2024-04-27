@@ -18,4 +18,6 @@ public class episodiosDto {
     private Date fecha_publicacion;
 
     private Integer duracion;
+
+    private usuarioEstandarDto autor;
 }
