@@ -7,17 +7,17 @@ import com.spootify.backend_spootify.Dtos.playlistDto;
 
 public interface Listas_Reproduccion_Service {
     
-    public List<caratulaPlaylistDto> obtenerPlaylistsTopGlobal();
+    public playlistDto obtenerPlaylistsTopGlobal();
 
-    public List<caratulaPlaylistDto> obtenerPlaylistsTopPais();
+    public playlistDto obtenerPlaylistsTopPais();
 
-    public List<caratulaPlaylistDto> obtenerPlaylistCreadas();
+    public List<caratulaPlaylistDto> obtenerPlaylistCreadas(int id);
 
-    public List<caratulaPlaylistDto> obtenerDailyMix();
+    public playlistDto obtenerDailyMix();
 
-    public List<caratulaPlaylistDto> obtenerHitsMasEscuchados();
+    public List<playlistDto> obtenerHitsMasEscuchados();
 
     public Boolean crarPlaylist(String nombrePlaylist, String descripcion);
 
-    public playlistDto obtenerPlaylist();
+    public playlistDto getPlaylistById(int id);
 }

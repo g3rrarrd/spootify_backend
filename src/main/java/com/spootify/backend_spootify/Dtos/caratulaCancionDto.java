@@ -1,8 +1,13 @@
 package com.spootify.backend_spootify.Dtos;
 
+import java.math.BigDecimal;
+
+import lombok.Data;
+
+@Data
 public class caratulaCancionDto {
 
-    int id_cancion;
+    BigDecimal id_cancion;
 
     String portadaCancion;
 

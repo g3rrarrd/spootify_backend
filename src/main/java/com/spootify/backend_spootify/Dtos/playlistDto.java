@@ -1,9 +1,14 @@
 package com.spootify.backend_spootify.Dtos;
 
+import java.math.BigDecimal;
 import java.util.List;
+import lombok.Data;
 
+@Data
 public class playlistDto {
     
+    BigDecimal id_playlist; 
+
     String portadaPlaylist;
 
     String nombrePlaylist;
@@ -14,9 +19,11 @@ public class playlistDto {
 
     Boolean guardado;
 
-    int guardados;
+    BigDecimal guardados;
 
     String duracion;
 
-    List<cancionDto> canciones;
+    List<caratulaCancionDto> canciones;
+
+    String descripcion;
 }
