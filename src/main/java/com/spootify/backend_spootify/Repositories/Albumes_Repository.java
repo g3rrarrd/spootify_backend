@@ -47,6 +47,7 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     @Query(value = "select a.nombre_usuario from tbl_usuarios a inner join tbl_albumes b on(a.id_usuario=b.id_usuario) where b.id_album = :idAlbum", nativeQuery = true)
     String obtenerNombreArtista(@RequestParam int idAlbum);
 
+    //Trae la foto del perfil del artista solo con el idAlbum
     @Query(value = "select a.url_foto_perfil from tbl_usuarios a inner join tbl_albumes b on(a.id_usuario=b.id_usuario) where b.id_album = :idAlbum", nativeQuery = true)
     String urlFotoPerfil(@RequestParam int idAlbum);
 }
