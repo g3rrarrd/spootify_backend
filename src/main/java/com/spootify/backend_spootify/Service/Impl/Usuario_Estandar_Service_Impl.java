@@ -57,36 +57,6 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
     }
 
     @Override
-    public usuarioEstandarDto validarUsuario(String correo, String cotrasenia) {
-        
-        try {
-
-            if(correo.matches("[(A-z)|(0-9)|(&|*|\\-)]*@{1}([A-z]+)\\.((com)|(edu))\\.?(hn)?")){
-                String[] infoUsuario = this.uer.validarUsuario(correo, cotrasenia).split(",");
-                usuarioEstandarDto usuarioEstandarDto = new usuarioEstandarDto();
-
-                /** 
-                usuarioEstandarDto.setNombre(infoUsuario[0]);
-                usuarioEstandarDto.setFoto(infoUsuario[1]);
-                usuarioEstandarDto.setPlanTipo(infoUsuario[2]);
-                usuarioEstandarDto.setCorreo(correo);
-                usuarioEstandarDto.setGeneroTipo(infoUsuario[4]);
-                usuarioEstandarDto.setTipoUsuario(infoUsuario[5]);
-                usuarioEstandarDto.setId(Integer.parseInt(infoUsuario[7]));
-                */
-                return usuarioEstandarDto;
-
-            }            
-            
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-
-    }
-
-    @Override
     public int cantidadListas(int id) {
         try {
             
@@ -195,7 +165,7 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
                 psPagoPlanes.setString(2, usuarioE.getIdPlan());
                 psPagoPlanes.setInt(3, idUsuario);
                 psPagoPlanes.setDate(4, Date.valueOf(LocalDate.now()));
-                psPagoPlanes.setDate(5, Date.valueOf(LocalDate.now().plusMonths(1)));
+                psPagoPlanes.setDate(5, null);
                 psPagoPlanes.executeUpdate();
                 psPagoPlanes.close();
            }

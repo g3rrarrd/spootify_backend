@@ -6,6 +6,8 @@ import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
 
 public interface Usuarios_Service {
 
+    public String validarUsuario(String correo, String cotrasenia);
+
     public void seguirUsuario(int idSeguidor, int idSeguido);
 
     public void dejarSeguir(int idSeguidor, int idSeguido);

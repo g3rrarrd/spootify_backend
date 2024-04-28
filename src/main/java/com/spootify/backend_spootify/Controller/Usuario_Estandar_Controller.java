@@ -25,11 +25,6 @@ public class Usuario_Estandar_Controller {
         return this.uesi.crearUsuario(usario);
     }
 
-    @GetMapping("/validar")
-    public usuarioEstandarDto validarUsuario(@RequestParam String correo, @RequestParam String contrasenia){
-        return this.uesi.validarUsuario(correo,contrasenia);
-    }
-
     @PostMapping("/crearLista")
     public void crearLista(@RequestParam String nombre,@RequestParam int id){
         this.uesi.crearListaReproduccion(nombre, id);

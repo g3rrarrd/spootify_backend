@@ -9,17 +9,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.GetExchange;
 
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
 import com.spootify.backend_spootify.Service.Impl.Usuarios_Service_Impl;
 
 @RestController
-@RequestMapping("/Usuario")
+@RequestMapping("/usuario")
 public class Usuario_Controler {
     
     @Autowired
     Usuarios_Service_Impl usi;
+
+    @GetMapping("/validar")
+    public String seguirUsuario(@RequestParam String correo, @RequestParam String contrasenia){
+        return this.usi.validarUsuario(correo, contrasenia);
+    }
 
     @PostMapping("/seguir")
     public void seguirUsuario(@RequestParam int idSeguidor, @RequestParam int idSeguido){

@@ -10,8 +10,6 @@ public interface Usuario_estandar_Service {
 
     public void eliminarUsuario(int id);
 
-    public usuarioEstandarDto validarUsuario(String correo, String cotrasenia);
-
     public int cantidadListas(int id);
 
     public List<String> obtenerNombreListas(int id);

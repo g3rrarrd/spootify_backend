@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
+import com.spootify.backend_spootify.Models.Usuarios;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Usuarios_Service;
@@ -21,6 +22,35 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
 
     @Autowired
     Usuario_Repository ur;
+
+    @Override
+    public String validarUsuario(String correo, String cotrasenia) {
+        Boolean success = false;
+        String message = "El usuario no existe";
+        try {
+
+            String user = ur.obtenerPorCorreo(correo);
+
+        if (user!=null) { //Si usuario existe
+
+            String[] usuario = user.split(",");
+
+            if (usuario[2].equals(cotrasenia)) {
+                success = true;
+                message = "Usuario validado";
+                return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);
+            }else{
+                message = "La contraseña no coincide con el correo";
+                return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);
+            }
+        }  
+        return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return String.format(success.toString(),"{\"success\":%s,\"message\":\"Algo ha fallado, intentalo de nuevo\"}");
+        }
+    }
+
 
     @Override
     public void seguirUsuario(int idSeguidor, int idSeguido) {
@@ -147,7 +177,6 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
         }
 
     }
-
 
     
 }
