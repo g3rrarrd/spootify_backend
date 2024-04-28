@@ -14,15 +14,15 @@ import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
 import com.spootify.backend_spootify.Service.Impl.Usuario_Estandar_Service_Impl;
 
 @RestController
-@RequestMapping("usuarioEst")
+@RequestMapping("usuarioEstandar")
 public class Usuario_Estandar_Controller {
     
     @Autowired
     Usuario_Estandar_Service_Impl uesi;
 
     @PostMapping("/crear")
-    public void crearUsuario(@RequestBody usuarioEstandarDto usario){
-        this.uesi.crearUsuario(usario);
+    public boolean crearUsuario(@RequestBody usuarioEstandarDto usario){
+        return this.uesi.crearUsuario(usario);
     }
 
     @GetMapping("/validar")

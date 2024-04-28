@@ -6,7 +6,7 @@ import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
 
 public interface Usuario_estandar_Service {
 
-    public void crearUsuario(usuarioEstandarDto usuarioE);
+    public boolean crearUsuario(usuarioEstandarDto usuarioE);
 
     public void eliminarUsuario(int id);
 
