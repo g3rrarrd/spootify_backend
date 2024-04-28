@@ -1,5 +1,7 @@
 package com.spootify.backend_spootify.Service.Impl;
 
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,9 +12,10 @@ import org.springframework.stereotype.Service;
 import com.spootify.backend_spootify.Dtos.CancionAlbumDto;
 import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
+import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Albumes_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
-import com.spootify.backend_spootify.Repositories.Usuario_Repository;
+import com.spootify.backend_spootify.Repositories.Usuario_estandar_Repository;
 import com.spootify.backend_spootify.Service.Albumes_Service;
 
 @Service
@@ -22,7 +25,7 @@ public class Albumes_Service_Impl implements Albumes_Service{
     Albumes_Repository albumes_Repository;
 
     @Autowired
-    Usuario_Repository usuario_Repository;
+    Usuario_estandar_Repository usuario_Repository;
 
     @Autowired
     Canciones_Repository canciones_Repository;
@@ -69,6 +72,54 @@ public class Albumes_Service_Impl implements Albumes_Service{
     }
 
     @Override
+    public boolean seguirAlbum(int idAlbum, int idUsuario) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false);
+            if(albumes_Repository.existsById(idAlbum) && usuario_Repository.existsById(idUsuario)){
+                PreparedStatement psSeguirAlbumes = conn.prepareStatement("insert into tbl_albumes_seguidos values(?,?,sysdate)");
+                
+                psSeguirAlbumes.setInt(1, idUsuario);
+                psSeguirAlbumes.setInt(2, idAlbum);
+
+                psSeguirAlbumes.executeUpdate() ;
+                conn.commit();
+                conn.close();
+                return true;
+            }
+            conn.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean dejarSeguirAlbum(int idAlbum, int idUsuario) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false);
+            if(albumes_Repository.existsById(idAlbum) && usuario_Repository.existsById(idUsuario)){
+                PreparedStatement psDejarSeguirAlbumes = conn.prepareStatement("delete from tbl_albumes_seguidos where id_usuario=? and id_album=?");
+                
+                psDejarSeguirAlbumes.setInt(1, idUsuario);
+                psDejarSeguirAlbumes.setInt(2, idAlbum);
+
+                psDejarSeguirAlbumes.executeUpdate() ;
+                conn.commit();
+                conn.close();
+                return true;
+            }
+            conn.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public List<Albumes> obtenerAlbumes() {
        try {
         
@@ -99,87 +150,6 @@ public class Albumes_Service_Impl implements Albumes_Service{
             e.printStackTrace();
             return null;
         }
-
-    }
-
-    @Override
-    public String traerPortadaAlbum(int id) {
-        
-        try {
-            
-            if(this.albumes_Repository.findById(id).isPresent()){
-                return this.albumes_Repository.obtenerPortada(id);
-            }
-
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    @Override
-    public String traerNombteAlbum(int id) {
-       
-        try {
-            
-            if(this.albumes_Repository.findById(id).isPresent()){
-                return this.albumes_Repository.obtenerNombre(id);
-            }
-
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public albumesDto traerArtistaFoto(int id) {
-        
-        try {
-            
-            if(this.albumes_Repository.findById(id).isPresent()){
-            
-                albumesDto albumArt = new albumesDto();
-                String[] artistas = this.albumes_Repository.obtenerNombreFotoArtista(id).split(",");
-
-                albumArt.setNombreArtista(artistas[0]);
-                albumArt.setFotoArtista(artistas[1]);
-                
-                return albumArt;
-
-            }
-
-            return null;
-
-        } catch (Exception e) {
-           e.printStackTrace();
-           return null;
-        }
-
-    }
-
-    @Override
-    public String traerLanzamientoAnio(int id) {
-       
-        try {
-       
-            if(this.albumes_Repository.findById(id).isPresent()){
-                
-                return this.albumes_Repository.obtenerFechaLanzamiento(id);
-                
-            }
-
-            return null;
-
-       } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-       }
 
     }
 
@@ -216,54 +186,5 @@ public class Albumes_Service_Impl implements Albumes_Service{
 
     }
 
-    @Override
-    public Date traerFechaPublicacion(int id) {
-        try{
-           
-            if(this.albumes_Repository.findById(id).isPresent()){
-                return this.albumes_Repository.findById(id).get().getFecha_lanzamiento();
-            }
 
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public String traerDuracionAlbum(int id) {
-        
-        try {
-            
-            if(this.albumes_Repository.findById(id).isPresent()){
-                //return this.albumes_Repository.obtenerDuracion(id);
-            }
-
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return null;
-        }
-
-    }
-
-    @Override
-    public int traerCantidadCacionesAlbum(int id) {
-       
-        try {
-            int canciones = this.albumes_Repository.contarCanciones(id);
-            return canciones;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-
-    }
-
-    
-    
 }

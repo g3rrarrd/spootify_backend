@@ -10,6 +10,9 @@ import com.spootify.backend_spootify.Models.Paises;
 
 public interface Paises_Repository extends JpaRepository<Paises, Integer>{
     
+    @Query(value = "select * from tbl_paises", nativeQuery = true)
+    List<Paises> obtenerTodosPaises();
+
     @Query(value = "select count(1) from tbl_paises", nativeQuery = true)
     int contarPaises();
 

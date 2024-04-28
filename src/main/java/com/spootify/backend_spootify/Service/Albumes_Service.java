@@ -14,21 +14,10 @@ public interface Albumes_Service {
 
     public Albumes buscarAlbumes(int id);
 
-    public String traerPortadaAlbum(int id);
+    public boolean seguirAlbum(int idAlbum, int idUsuario);
 
-    public String traerNombteAlbum(int id);
-    
-    public albumesDto traerArtistaFoto(int id);
-
-    public String traerLanzamientoAnio(int id);
+    public boolean dejarSeguirAlbum(int idAlbum, int idUsuario);
 
     public List<albumesDto> traerCancionesAlbum(int id);
-
-    public Date traerFechaPublicacion(int id);
-
-    public String traerDuracionAlbum(int id);
-
-    public int traerCantidadCacionesAlbum(int id);
-
 
 }
