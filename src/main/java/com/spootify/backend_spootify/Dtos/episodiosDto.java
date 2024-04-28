@@ -15,9 +15,11 @@ public class episodiosDto {
 
     private String portada;
 
-    private Date fecha_publicacion;
+    private String fecha_publicacion;
 
-    private Integer duracion;
+    private String duracion;
 
-    private usuarioEstandarDto autor;
+    private String nombrePodcast;
+
+    private int idPodcast;
 }

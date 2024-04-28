@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.spootify.backend_spootify.Dtos.episodiosDto;
 import com.spootify.backend_spootify.Dtos.generoPodcastsDto;
 import com.spootify.backend_spootify.Dtos.podcastDto;
+import com.spootify.backend_spootify.Objects.Funciones;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Podcasts_Repository;
 import com.spootify.backend_spootify.Service.Podcasts_Service;
@@ -74,7 +75,7 @@ public class Podcasts_Service_Impl implements Podcasts_Service{
         try {
             
             Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
-            PreparedStatement psEpi = conn.prepareStatement("select  id_episodio, a.id_podcast, c.nombre_media, descripcion_episodio, url_portada, c.fecha_publicacion, c.duracion_media from tbl_episodio a inner join tbl_podcasts b on a.id_podcast = b.id_podcast inner join tbl_media c on a.id_episodio = c.id_media where a.id_podcast = ?");
+            PreparedStatement psEpi = conn.prepareStatement("select  id_episodio, a.id_podcast, c.nombre_media, descripcion_episodio, url_portada, to_char(c.fecha_publicacion, 'd FMMonth FMYY'), c.duracion_media from tbl_episodio a inner join tbl_podcasts b on a.id_podcast = b.id_podcast inner join tbl_media c on a.id_episodio = c.id_media where a.id_podcast = ?");
             psEpi.setInt(1, id);
             ResultSet rsEpi = psEpi.executeQuery();
             List<episodiosDto> listEpisodios = new LinkedList<>();
@@ -85,8 +86,8 @@ public class Podcasts_Service_Impl implements Podcasts_Service{
                 episodio.setNombre(rsEpi.getString(3));
                 episodio.setDescripcion(rsEpi.getString(4));
                 episodio.setPortada(rsEpi.getString(5));
-                episodio.setFecha_publicacion(rsEpi.getDate(6));
-                episodio.setDuracion(rsEpi.getInt(7));
+                episodio.setFecha_publicacion(rsEpi.getString(6));
+                episodio.setDuracion(Funciones.convertirDuracion(rsEpi.getInt(7)));
 
                 listEpisodios.add(episodio);
             }
