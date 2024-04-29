@@ -14,6 +14,6 @@ public interface Usuario_estandar_Service {
 
     public List<String> obtenerNombreListas(int id);
 
-    public void crearListaReproduccion(String nombre, int idUsuario);
+    public void crearListaReproduccion(String nombre, String portada, int idUsuario, int idTipoLista, String descripcion);
     
 }

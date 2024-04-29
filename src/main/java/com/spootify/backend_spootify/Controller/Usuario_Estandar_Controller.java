@@ -14,7 +14,7 @@ import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
 import com.spootify.backend_spootify.Service.Impl.Usuario_Estandar_Service_Impl;
 
 @RestController
-@RequestMapping("usuarioEstandar")
+@RequestMapping("/usuarioEstandar")
 public class Usuario_Estandar_Controller {
     
     @Autowired
@@ -26,8 +26,8 @@ public class Usuario_Estandar_Controller {
     }
 
     @PostMapping("/crearLista")
-    public void crearLista(@RequestParam String nombre,@RequestParam int id){
-        this.uesi.crearListaReproduccion(nombre, id);
+    public void crearLista(@RequestParam String nombre,@RequestParam String portada,@RequestParam int id,@RequestParam int idTipoLista,@RequestParam String descripcion){
+        this.uesi.crearListaReproduccion(nombre, portada, id,  idTipoLista, descripcion);
     }
 
     @GetMapping("/contarListas")
