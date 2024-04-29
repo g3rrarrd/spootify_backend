@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spootify.backend_spootify.Dtos.ArtistaRegisterDto;
+import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
 import com.spootify.backend_spootify.Repositories.Artistas_Repository;
 import com.spootify.backend_spootify.Service.Artistas_Service;
 
@@ -30,15 +30,15 @@ public class Artistas_Service_Impl implements Artistas_Service{
     }
 
     @Override
-    public List<ArtistaRegisterDto> obtenerTodosRegister() {
+    public List<ArtistaDtoMin> obtenerTodosRegister() {
         try {
             if (aRepository.obtenerArtistasRegister()!=null) {
                 
                 List<Object[]> artistasObject = aRepository.obtenerArtistasRegister();
-                List<ArtistaRegisterDto> artistasEnviar = new LinkedList<ArtistaRegisterDto>();
+                List<ArtistaDtoMin> artistasEnviar = new LinkedList<ArtistaDtoMin>();
 
                 for (Object[] artista : artistasObject) {
-                    ArtistaRegisterDto artistaRegister = new ArtistaRegisterDto();
+                    ArtistaDtoMin artistaRegister = new ArtistaDtoMin();
                     artistaRegister.setIdArtista(artista[0].toString());
                     artistaRegister.setNombreArtista(artista[1].toString());
                     artistaRegister.setFotoArtista(artista[2].toString());

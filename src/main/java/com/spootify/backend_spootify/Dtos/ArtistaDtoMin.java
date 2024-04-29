@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtistaRegisterDto {
+public class ArtistaDtoMin {
     
     private String idArtista;
     
