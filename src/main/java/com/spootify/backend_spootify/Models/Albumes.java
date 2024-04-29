@@ -38,8 +38,6 @@ public class Albumes {
 
     private Date fecha_lanzamiento;
 
-    private String color;
-
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     @JsonIgnore

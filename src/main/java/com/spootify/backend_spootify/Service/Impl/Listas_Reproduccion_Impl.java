@@ -33,7 +33,7 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
             cancion.setNombreCancion((String) songInfo[1]);
-            cancion.setPortadaCancion((String) songInfo[2]); 
+            cancion.setPortadaCancion((String) songInfo[2]);
             cancion.setArtistaCancion((String) songInfo[3]);
 
             canciones.add(cancion);
@@ -114,13 +114,14 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
         List<caratulaCancionDto> canciones = new LinkedList<>();
         for (Object obj : playlistTop) {
             Object[] songInfo = (Object[]) obj; 
-            
+            System.out.println(songInfo);
             caratulaCancionDto cancion = new caratulaCancionDto();
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
             cancion.setNombreCancion((String) songInfo[1]);
             cancion.setPortadaCancion((String) songInfo[2]); 
             cancion.setArtistaCancion((String) songInfo[3]);
+            cancion.setColor((String) songInfo[4]);
 
             canciones.add(cancion);
         }
