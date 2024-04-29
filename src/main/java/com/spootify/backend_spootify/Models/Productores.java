@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class Productores {
 
     private String apellido;
 
-    @OneToMany(mappedBy = "productores")
-    private List<Creditos> creditos;
+    @ManyToOne
+    @JoinColumn(name = "id_credito")
+    private Creditos credito;
 }

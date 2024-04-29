@@ -29,8 +29,8 @@ import lombok.NoArgsConstructor;
 public class Creditos {
    
     @Id
-    @Column(name = "id_creditos_musicales")
-    private int idCreditos;
+    @Column(name = "id_credito")
+    private int idCredito;
 
     private String firma_discografica;
 
@@ -42,12 +42,10 @@ public class Creditos {
     @JoinColumn(name = "id_cancion")
     private Canciones canciones;
 
-    @ManyToOne
-    @JoinColumn(name = "id_productor")
-    private Productores productores;
+    @OneToMany(mappedBy = "credito")
+    private List<Productores> productores;
 
-    @ManyToOne
-    @JoinColumn(name = "id_escritor")
-    private Escritores escritores;
+    @OneToMany(mappedBy = "credito")
+    private List<Escritores> escritores;
 
 }
