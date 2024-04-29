@@ -79,17 +79,19 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
     }
     
     @Override
-    public void crearListaReproduccion(String nombre, int idUsuario) {
+    public void crearListaReproduccion(String nombre, String portada, int idUsuario, int idTipoLista, String descripcion) {
         try {
 
                 java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
                 conn.setAutoCommit(false); 
 
-                PreparedStatement ps = conn.prepareStatement("insert into tbl_listas_reproduccion values(?,?,?,?)");
+                PreparedStatement ps = conn.prepareStatement("insert into tbl_listas_reproduccion values(?,?,?,?,?,?)");
                 ps.setInt(1, this.uer.contarListas(idUsuario) + 1);
                 ps.setInt(2, idUsuario);
                 ps.setString(3, nombre);
-                ps.setInt(4, 0);
+                ps.setString(4, portada);
+                ps.setInt(5, idTipoLista);
+                ps.setString(6, descripcion);
                 ps.executeUpdate();
 
                 conn.commit();
@@ -170,8 +172,9 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
                 psPagoPlanes.close();
            }
 
+           conn.commit(); 
+           this.crearListaReproduccion("Tus me gusta", "like.png", idUsuario, 5, "Tu musica favorita de tus artistas preferidos");
 
-            conn.commit(); 
             conn.close();
 
             return true;
@@ -181,4 +184,5 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
         }
         
     }
+
 }

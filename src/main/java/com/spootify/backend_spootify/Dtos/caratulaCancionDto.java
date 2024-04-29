@@ -14,4 +14,6 @@ public class caratulaCancionDto {
     String nombreCancion;
 
     String artistaCancion;
+
+    String color;
 }
