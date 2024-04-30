@@ -2,8 +2,6 @@ package com.spootify.backend_spootify.Dtos;
 
 import java.util.List;
 
-import com.spootify.backend_spootify.Models.Listas_reproduccion;
-
 import lombok.Data;
 
 @Data

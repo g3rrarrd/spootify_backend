@@ -79,14 +79,16 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
     }
     
     @Override
-    public void crearListaReproduccion(String nombre, String portada, int idUsuario, int idTipoLista, String descripcion) {
+    public int crearListaReproduccion(String nombre, String portada, int idUsuario, int idTipoLista, String descripcion) {
         try {
 
                 java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
                 conn.setAutoCommit(false); 
 
+                int idLista = this.uer.contarListas(idUsuario) + 1;
+
                 PreparedStatement ps = conn.prepareStatement("insert into tbl_listas_reproduccion values(?,?,?,?,?,?)");
-                ps.setInt(1, this.uer.contarListas(idUsuario) + 1);
+                ps.setInt(1, idLista);
                 ps.setInt(2, idUsuario);
                 ps.setString(3, nombre);
                 ps.setString(4, portada);
@@ -96,10 +98,12 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
 
                 conn.commit();
                 conn.close();
-            
+
+            return idLista;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return 0;
         }
     }
 
