@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spootify.backend_spootify.Dtos.perfilDto;
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
 import com.spootify.backend_spootify.Service.Impl.Usuarios_Service_Impl;
 
@@ -53,6 +54,11 @@ public class Usuario_Controler {
     @GetMapping("/nombreSeguidos")
     public List<usuarioSeguiDto> nombreSeguidos(@RequestParam int id){
         return this.usi.traerSeguidos(id);
+    }
+
+    @GetMapping("/perfil")
+    public perfilDto traerPerefil(@RequestParam int id){
+        return this.usi.traerPerfil(id);
     }
 
 }

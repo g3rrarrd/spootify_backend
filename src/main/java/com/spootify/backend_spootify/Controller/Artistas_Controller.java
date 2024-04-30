@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spootify.backend_spootify.Dtos.ArtistaRegisterDto;
+import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
 import com.spootify.backend_spootify.Service.Impl.Artistas_Service_Impl;
 
 @RestController
@@ -18,7 +18,7 @@ public class Artistas_Controller {
     Artistas_Service_Impl asi;
 
     @GetMapping("/toregister")
-    public List<ArtistaRegisterDto> obtenerArtistasRegister(){
+    public List<ArtistaDtoMin> obtenerArtistasRegister(){
         return asi.obtenerTodosRegister();
     }
 

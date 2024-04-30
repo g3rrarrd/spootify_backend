@@ -2,8 +2,10 @@ package com.spootify.backend_spootify.Service.Impl;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +13,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spootify.backend_spootify.Dtos.listaReproduccionDto;
+import com.spootify.backend_spootify.Dtos.perfilDto;
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
+import com.spootify.backend_spootify.Models.Listas_reproduccion;
 import com.spootify.backend_spootify.Models.Usuarios;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
@@ -176,6 +181,56 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
             return null;
         }
 
+    }
+
+
+    @Override
+    public perfilDto traerPerfil(int idUsuario) {
+        try {
+            perfilDto perfil = new perfilDto();
+
+            perfil.setNombre(this.ur.obtenerNombre(idUsuario));
+            perfil.setUrl_foto_perfil(this.ur.urlFotoPerfil(idUsuario));
+            perfil.setCantidadSeguidores(this.ur.numeroSeguidores(idUsuario));
+            perfil.setCantidadSeguidos(this.ur.numeroSeguidos(idUsuario));
+            perfil.setPlaylistCreadas(this.traerListas(idUsuario));
+            
+            return perfil;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private List<listaReproduccionDto> traerListas(int idUsuario){
+        try {
+
+            Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            PreparedStatement psListaRe = conn.prepareStatement("select id_lista_reproduccion, nombre_lista_reproduccion, url_portada_lista, b.nombre_tipo_lista, descripcion from tbl_listas_reproduccion a inner join tbl_tipos_listas b on a.id_tipo_lista = b.id_tipo_lista where id_usuario_propietario = ?");
+            psListaRe.setInt(1, idUsuario);
+            ResultSet rsListaRep = psListaRe.executeQuery();
+
+            
+            List<listaReproduccionDto> listaReproduccionDtos = new LinkedList<>();
+
+            while(rsListaRep.next()){
+                listaReproduccionDto listasReproduccion = new listaReproduccionDto();
+                listasReproduccion.setIdLista(rsListaRep.getInt(1));
+                listasReproduccion.setNombreLista(rsListaRep.getString(2));
+                listasReproduccion.setPortadaLista(rsListaRep.getString(3));
+                listasReproduccion.setTipoLista(rsListaRep.getString(4));
+                listasReproduccion.setDescripcionLista(rsListaRep.getString(5));
+                
+                listaReproduccionDtos.add(listasReproduccion);
+            }
+
+            return listaReproduccionDtos;
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     

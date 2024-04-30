@@ -26,8 +26,8 @@ public class Usuario_Estandar_Controller {
     }
 
     @PostMapping("/crearLista")
-    public void crearLista(@RequestParam String nombre,@RequestParam String portada,@RequestParam int id,@RequestParam int idTipoLista,@RequestParam String descripcion){
-        this.uesi.crearListaReproduccion(nombre, portada, id,  idTipoLista, descripcion);
+    public int crearLista(@RequestParam String nombre,@RequestParam String portada,@RequestParam int idUsuario,@RequestParam int idTipoLista,@RequestParam String descripcion){
+        return this.uesi.crearListaReproduccion(nombre, portada, idUsuario, idTipoLista, descripcion);
     }
 
     @GetMapping("/contarListas")
