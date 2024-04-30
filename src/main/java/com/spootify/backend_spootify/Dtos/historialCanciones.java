@@ -6,10 +6,10 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class historialCancionDto {
+public class historialCanciones {
+    
+    private Date fecha;
 
-    private String fechaEscuchada;
-
-    private List<cancionDto> cancion;
+    private List<listaReproduccionDto> canciones;
 
 }
