@@ -9,10 +9,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CancionAlbumDto {
+public class CancionDtoMin {
 
     private String idCancion;
     
     private String nombreCancion;
+
+    private String artistaCancion;
+
+    private String portada;
     
 }

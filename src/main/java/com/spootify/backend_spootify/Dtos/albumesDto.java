@@ -27,5 +27,5 @@ public class albumesDto {
 
     private int follow;
 
-    private List<CancionAlbumDto> canciones;
+    private List<CancionDtoMin> canciones;
 }

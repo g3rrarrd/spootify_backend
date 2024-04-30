@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spootify.backend_spootify.Dtos.CancionAlbumDto;
+import com.spootify.backend_spootify.Dtos.CancionDtoMin;
 import com.spootify.backend_spootify.Dtos.albumesDto;
 import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.OracleData.oraData;
@@ -51,10 +51,10 @@ public class Albumes_Service_Impl implements Albumes_Service{
 
                 List<Object[]> cancionesTraidas = albumes_Repository.obtenerCanciones(idAlbum);
 
-                List<CancionAlbumDto> cancionesEnviar = new LinkedList<CancionAlbumDto>();
+                List<CancionDtoMin> cancionesEnviar = new LinkedList<CancionDtoMin>();
 
                 for (Object[] cancion : cancionesTraidas) {
-                    CancionAlbumDto cancionDto = new CancionAlbumDto();
+                    CancionDtoMin cancionDto = new CancionDtoMin();
                     cancionDto.setIdCancion(cancion[0].toString());
                     cancionDto.setNombreCancion(cancion[1].toString());
                     cancionesEnviar.add(cancionDto);

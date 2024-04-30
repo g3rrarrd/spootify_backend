@@ -16,7 +16,7 @@ public interface Canciones_Repository extends JpaRepository<Canciones, Integer>{
     @Query(value = "Select portada from tbl_albumes a left join tbl_canciones b on(a.id_album=b.id_album) where b.id_cancion = :id", nativeQuery = true)
     String obtenerPortada(@Param("id")int id);
 
-    @Query(value = "Select color from tbl_albumes a left join tbl_canciones b on(a.id_album=b.id_album) where b.id_cancion = :id", nativeQuery = true)
+    @Query(value = "Select c.valor_hexadecimal from tbl_albumes a left join tbl_canciones b on(a.id_album=b.id_album) left join tbl_colores c on(a.id_color=c.id_color) where b.id_cancion = :id", nativeQuery = true)
     String obtenerColor(int id);
 
     @Query(value = "select b.id_usuario, b.nombre_usuario, b.url_foto_perfil from tbl_canciones a left join tbl_usuarios b on a.id_artista = b.id_usuario where a.id_cancion = :id", nativeQuery = true)
