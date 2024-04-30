@@ -53,28 +53,32 @@ List<Object[]> getPlaylistByIdUsuario(@Param("id")int id);
     "A.DESCRIPCION, C.NOMBRE_USUARIO, C.URL_FOTO_PERFIL", nativeQuery = true)
 Object[] getPlaylistView(@Param("id")int id);
 
-@Query(value = "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, C.PORTADA, D.NOMBRE_USUARIO " +
-        "FROM TBL_MEDIA A " +
-        "INNER JOIN TBL_CANCIONES B " +
-        "ON (A.ID_MEDIA = B.ID_CANCION) " +
-        "INNER JOIN TBL_ALBUMES C " +
-        "ON (B.ID_ALBUM = C.ID_ALBUM) " +
-        "INNER JOIN TBL_USUARIOS D " +
-        "ON (B.ID_ARTISTA = D.ID_USUARIO)",
+@Query(value = "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, C.PORTADA, E.VALOR_HEXADECIMAL AS COLOR, D.NOMBRE_USUARIO " +
+                "FROM TBL_MEDIA A " +
+                "INNER JOIN TBL_CANCIONES B " +
+                "ON (A.ID_MEDIA = B.ID_CANCION) " +
+                "INNER JOIN TBL_ALBUMES C " +
+                "ON (B.ID_ALBUM = C.ID_ALBUM) " +
+                "INNER JOIN TBL_USUARIOS D " +
+                "ON (B.ID_ARTISTA = D.ID_USUARIO) " +
+                "INNER JOIN TBL_COLORES E " +
+                "ON (C.ID_COLOR = E.ID_COLOR)",
         nativeQuery = true)
 List<Object[]> getCancionesPlaylist(@Param("id")int id);
 
-@Query(value = "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, C.PORTADA, D.NOMBRE_USUARIO " +
-        "FROM TBL_MEDIA A " +
-        "INNER JOIN TBL_CANCIONES B " +
-        "ON (A.ID_MEDIA = B.ID_CANCION) " +
-        "INNER JOIN TBL_ALBUMES C " +
-        "ON (B.ID_ALBUM = C.ID_ALBUM) " +
-        "INNER JOIN TBL_USUARIOS D " +
-        "ON (B.ID_ARTISTA = D.ID_USUARIO) " +
-        "INNER JOIN TBL_LISTAS_Y_CANCIONES E " +
-        "ON (A.ID_MEDIA = E.ID_CANCION) " +
-        "WHERE (E.ID_LISTA_REPRODUCCION = :id)", nativeQuery = true)
+@Query(value = "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, C.PORTADA, D.NOMBRE_USUARIO, F.VALOR_HEXADECIMAL AS COLOR " +
+                "FROM TBL_MEDIA A " +
+                "INNER JOIN TBL_CANCIONES B " +
+                "ON (A.ID_MEDIA = B.ID_CANCION) " +
+                "INNER JOIN TBL_ALBUMES C " +
+                "ON (B.ID_ALBUM = C.ID_ALBUM) " +
+                "INNER JOIN TBL_USUARIOS D " +
+                "ON (B.ID_ARTISTA = D.ID_USUARIO) " +
+                "INNER JOIN TBL_LISTAS_Y_CANCIONES E " +
+                "ON (A.ID_MEDIA = E.ID_CANCION) " +
+                "INNER JOIN TBL_COLORES F " +
+                "ON (C.ID_COLOR = F.ID_COLOR) " +
+                "WHERE (E.ID_LISTA_REPRODUCCION = :id)", nativeQuery = true)
 List<Object[]> getListaCancionesPlaylist(@Param("id")int id);
 
 }

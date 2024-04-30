@@ -35,8 +35,6 @@ public class Podcasts {
 
     private String descripcion_podcast;
 
-    private String color;
-
     @OneToMany(mappedBy = "podcast")
     private List<Episodios> episodios;
 
