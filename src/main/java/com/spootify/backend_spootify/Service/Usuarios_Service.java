@@ -2,6 +2,7 @@ package com.spootify.backend_spootify.Service;
 
 import java.util.List;
 
+import com.spootify.backend_spootify.Dtos.perfilDto;
 import com.spootify.backend_spootify.Dtos.usuarioSeguiDto;
 
 public interface Usuarios_Service {
@@ -19,5 +20,7 @@ public interface Usuarios_Service {
     public List<usuarioSeguiDto> traerSeguidores(int idUsuario);
 
     public List<usuarioSeguiDto> traerSeguidos(int idUsuario);
+
+    public perfilDto traerPerfil(int idUsuario);
 
 }

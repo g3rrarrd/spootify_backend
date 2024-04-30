@@ -37,4 +37,5 @@ public interface Usuario_Repository extends JpaRepository<Usuarios, Integer>{
 
     @Query(value = "select url_foto_perfil from tbl_usuarios where id_usuario= :id", nativeQuery = true)
     String urlFotoPerfil(@RequestParam int id);
+
 }
