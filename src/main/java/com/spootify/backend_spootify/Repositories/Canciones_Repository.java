@@ -27,5 +27,5 @@ public interface Canciones_Repository extends JpaRepository<Canciones, Integer>{
 
     @Query(value = "Select color from tbl_canciones where id_media = :id", nativeQuery = true)
     String traerColor(int id);
-
+ 
 }

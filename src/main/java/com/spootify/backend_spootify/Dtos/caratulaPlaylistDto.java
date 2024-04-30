@@ -15,4 +15,6 @@ public class caratulaPlaylistDto {
     
     String Descripcion;
 
+    int cantidadCanciones;
+
 }
