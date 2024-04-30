@@ -37,11 +37,27 @@ public class Biblioteca_Service_Impl implements Bilblioteca_Service {
             playlist.setNombrePlaylist((String) songInfo[1]);
             playlist.setPortadaPlaylist((String) songInfo[2]); 
             playlist.setDescripcion((String) songInfo[3]);
-            playlist.setCantidadCanciones((int) songInfo[4]);
+            BigDecimal songsCount = (BigDecimal) songInfo[4];
+            playlist.setCantidadCanciones(songsCount);
 
             playlists.add(playlist);
         }
 
+        List<Object[]> podcasts = library.getPodcastsByIdUser(idUser);
+        List<caratulaPlaylistDto> podcast = new LinkedList<>();
+        for (Object obj : podcasts) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_playlist = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_playlist);
+            playlist.setNombrePlaylist((String) songInfo[1]);
+            playlist.setPortadaPlaylist((String) songInfo[2]); 
+            playlist.setDescripcion((String) songInfo[3]);
+
+            podcast.add(playlist);
+        }
+        
         Object[] user = library.getUserByid(idUser);
         bibliotecaDto biblioteca = new bibliotecaDto();
         for (Object obj : user) {
@@ -50,6 +66,7 @@ public class Biblioteca_Service_Impl implements Bilblioteca_Service {
             biblioteca.setFotoUsuario((String) songInfo[2]);
         }
         biblioteca.setPlaylists(playlists);
+        biblioteca.setPodcasts(podcast);
         return biblioteca;
     }
     

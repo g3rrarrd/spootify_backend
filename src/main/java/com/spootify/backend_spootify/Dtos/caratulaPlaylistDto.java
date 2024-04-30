@@ -15,6 +15,6 @@ public class caratulaPlaylistDto {
     
     String Descripcion;
 
-    int cantidadCanciones;
+    BigDecimal cantidadCanciones;
 
 }

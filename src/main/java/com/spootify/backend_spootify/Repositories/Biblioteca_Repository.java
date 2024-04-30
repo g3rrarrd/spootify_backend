@@ -41,6 +41,15 @@ public interface Biblioteca_Repository extends JpaRepository<Listas_reproduccion
         nativeQuery = true)
     Object[] getUserByid(@Param("id")int id);
 
-
+    @Query(
+        value = "SELECT A.ID_PODCAST, A.NOMBRE_PODCAST, A.URL_PORTADA_PODCAST, B.NOMBRE_USUARIO\r\n" + //
+                        "FROM TBL_PODCASTS A\r\n" + //
+                        "INNER JOIN TBL_USUARIOS B\r\n" + //
+                        "ON(A.ID_PODCASTER = B.ID_USUARIO)\r\n" + //
+                        "INNER JOIN TBL_SEGUIDORES C\r\n" + //
+                        "ON(A.ID_PODCASTER = C.ID_USUARIO_SEGUIDO)\r\n" + //
+                        "WHERE C.ID_USUARIO_SEGUIDOR = :id", 
+        nativeQuery = true)
+    List<Object[]> getPodcastsByIdUser(@Param("id")int id);
 
 }

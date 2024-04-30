@@ -9,4 +9,6 @@ public class bibliotecaDto {
     String fotoUsuario;
 
     List<caratulaPlaylistDto> playlists;
+
+    List<caratulaPlaylistDto> podcasts;
 }
