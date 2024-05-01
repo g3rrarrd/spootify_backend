@@ -55,8 +55,8 @@ public class Albumes_Service_Impl implements Albumes_Service{
 
                 for (Object[] cancion : cancionesTraidas) {
                     CancionDtoMin cancionDto = new CancionDtoMin();
-                    cancionDto.setIdCancion(cancion[0].toString());
-                    cancionDto.setNombreCancion(cancion[1].toString());
+                    cancionDto.setId(cancion[0].toString());
+                    cancionDto.setNombre(cancion[1].toString());
                     cancionesEnviar.add(cancionDto);
                 }
                 album.setCanciones(cancionesEnviar);

@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CancionDtoMin {
 
-    private String idCancion;
+    private String id;
     
-    private String nombreCancion;
+    private String nombre;
 
     private String artistaCancion;
 
     private String portada;
     
+    private int tipoObjeto;
 }

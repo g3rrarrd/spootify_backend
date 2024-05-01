@@ -33,8 +33,8 @@ public class Canciones_Service_Impl implements Canciones_Service{
 
             for (Object[] cancion : cancionesTraidas) {
                 CancionDtoMin cancionDto = new CancionDtoMin();
-                cancionDto.setIdCancion(cancion[0].toString());
-                cancionDto.setNombreCancion(cancion[1].toString());
+                cancionDto.setId(cancion[0].toString());
+                cancionDto.setNombre(cancion[1].toString());
                 cancionDto.setArtistaCancion(cancion[2].toString());
                 cancionDto.setPortada(cancion[3].toString());
                 cancionesEnviar.add(cancionDto);
