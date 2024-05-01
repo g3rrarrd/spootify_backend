@@ -31,7 +31,7 @@ public class Historial_reproduccion {
 
 
     @OneToMany(mappedBy = "historial_reproduccion")
-    private List<Historial_Canciones> historial_Canciones;
+    private List<Historial_Media> historial_Canciones;
 
     @OneToMany(mappedBy = "hisotrial_reproduccion")
     private List<Usuario_Estandar> Usuario_Estandar;

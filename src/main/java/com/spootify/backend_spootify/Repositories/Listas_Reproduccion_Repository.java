@@ -13,7 +13,7 @@ public interface Listas_Reproduccion_Repository extends JpaRepository<Listas_rep
                 
         value = "SELECT ID_MEDIA, NOMBRE_MEDIA, PORTADA, NOMBRE_USUARIO FROM (" +
         "WITH T AS (SELECT ID_MEDIA, COUNT(ID_MEDIA) AS REPRODUCCIONES " +
-                "FROM TBL_HISTORIAL_CANCIONES " +
+                "FROM TBL_HISTORIAL_MEDIA " +
                 "GROUP BY ID_MEDIA) " +
         "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, B.PORTADA, B.NOMBRE_USUARIO " +
         "FROM TBL_MEDIA A " +
@@ -88,7 +88,7 @@ List<Object[]> getListaCancionesPlaylist(@Param("id")int id);
                 "        D.NOMBRE_MEDIA, \r\n" + //
                 "        C.PORTADA,\r\n" + //
                 "        ROW_NUMBER() OVER (PARTITION BY A.ID_MEDIA ORDER BY A.FECHA_REPRODUCCION DESC) AS row_num\r\n" + //
-                "    FROM TBL_HISTORIAL_CANCIONES A\r\n" + //
+                "    FROM TBL_HISTORIAL_MEDIA A\r\n" + //
                 "    INNER JOIN TBL_CANCIONES B ON A.ID_MEDIA = B.ID_CANCION\r\n" + //
                 "    INNER JOIN TBL_ALBUMES C ON B.ID_ALBUM = C.ID_ALBUM\r\n" + //
                 "    INNER JOIN TBL_MEDIA D ON A.ID_MEDIA = D.ID_MEDIA\r\n" + //

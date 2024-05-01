@@ -191,7 +191,7 @@ public class Canciones_Service_Impl implements Canciones_Service{
                 
                 int historial = canciones_Repository.getHistorial(idUsuario);
 
-                PreparedStatement playSong = conn.prepareStatement("INSERT INTO tbl_historial_canciones (id_historial_reproduccion, id_media, fecha_reproduccion) VALUES (?, ?, SYSDATE)");
+                PreparedStatement playSong = conn.prepareStatement("INSERT INTO tbl_historial_media (id_historial_reproduccion, id_media, fecha_reproduccion) VALUES (?, ?, SYSDATE)");
                 
                 playSong.setInt(1, historial);
                 playSong.setInt(2, idMedia);

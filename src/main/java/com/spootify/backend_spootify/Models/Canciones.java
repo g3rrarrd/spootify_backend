@@ -60,7 +60,7 @@ public class Canciones {
  
     @OneToMany(mappedBy = "canciones")
     @JsonIgnore
-    private List<Historial_Canciones> historial_canciones;
+    private List<Historial_Media> historial_canciones;
 
     @OneToMany(mappedBy = "canciones")
     @JsonIgnore
