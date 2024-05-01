@@ -81,4 +81,22 @@ List<Object[]> getCancionesPlaylist(@Param("id")int id);
                 "WHERE (E.ID_LISTA_REPRODUCCION = :id)", nativeQuery = true)
 List<Object[]> getListaCancionesPlaylist(@Param("id")int id);
 
+@Query(value = "SELECT ID_MEDIA, NOMBRE_MEDIA, PORTADA\r\n" + //
+                "FROM (\r\n" + //
+                "    SELECT \r\n" + //
+                "        A.ID_MEDIA, \r\n" + //
+                "        D.NOMBRE_MEDIA, \r\n" + //
+                "        C.PORTADA,\r\n" + //
+                "        ROW_NUMBER() OVER (PARTITION BY A.ID_MEDIA ORDER BY A.FECHA_REPRODUCCION DESC) AS row_num\r\n" + //
+                "    FROM TBL_HISTORIAL_CANCIONES A\r\n" + //
+                "    INNER JOIN TBL_CANCIONES B ON A.ID_MEDIA = B.ID_CANCION\r\n" + //
+                "    INNER JOIN TBL_ALBUMES C ON B.ID_ALBUM = C.ID_ALBUM\r\n" + //
+                "    INNER JOIN TBL_MEDIA D ON A.ID_MEDIA = D.ID_MEDIA\r\n" + //
+                "    INNER JOIN TBL_HISTORIAL_DE_REPRODUCCION E ON A.ID_HISTORIAL_REPRODUCCION = E.ID_HISTORIAL_REPRODUCCION\r\n" + //
+                "    INNER JOIN TBL_USUARIO_ESTANDAR F ON E.ID_HISTORIAL_REPRODUCCION = F.ID_HISTORIAL_DE_REPRODUCCION\r\n" + //
+                "    WHERE F.ID_USUARIO = 35\r\n" + //
+                ") subquery\r\n" + //
+                "WHERE row_num = 1 AND ROWNUM <= 10;", nativeQuery = true)
+List<Object[]> getCancionesRecientes(@Param("id")int id);
+
 }

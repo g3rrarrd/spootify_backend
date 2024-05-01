@@ -1,5 +1,6 @@
 package com.spootify.backend_spootify.Service.Impl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,12 +13,16 @@ import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.artistaDto;
 import com.spootify.backend_spootify.Dtos.cancionDto;
+import com.spootify.backend_spootify.Dtos.caratulaCancionDto;
+import com.spootify.backend_spootify.Dtos.caratulaPlaylistDto;
 import com.spootify.backend_spootify.Dtos.episodiosDto;
 import com.spootify.backend_spootify.Dtos.homeDto;
+import com.spootify.backend_spootify.Dtos.homeViewDto;
 import com.spootify.backend_spootify.Dtos.listaReproduccionDto;
 import com.spootify.backend_spootify.Dtos.podcasterDto;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
+import com.spootify.backend_spootify.Repositories.Listas_Reproduccion_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Home_Service;
 
@@ -29,6 +34,9 @@ public class Home_Service_Impl implements Home_Service{
 
     @Autowired
     Usuario_Repository ur;
+
+    @Autowired
+    Listas_Reproduccion_Repository listas;
 
     @Override
     public homeDto traerHome(int id) {
@@ -202,6 +210,31 @@ public class Home_Service_Impl implements Home_Service{
             System.err.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public homeViewDto getHome(int id) {
+        List<Object[]> canciones = listas.getCancionesRecientes(id);
+        //Metodo para Obtener las ultimas 10 canciones escuchadas
+        List<caratulaPlaylistDto> listaCanciones = new LinkedList<>();
+        for (Object obj : canciones) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_media = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_media);
+            playlist.setNombrePlaylist((String) songInfo[1]);
+            playlist.setPortadaPlaylist((String) songInfo[2]); 
+
+            listaCanciones.add(playlist);
+        }
+        String foto = ur.urlFotoPerfil(id);
+
+        homeViewDto homeDto = new homeViewDto();
+        homeDto.setCancionesRecientes(listaCanciones);
+        homeDto.setFotoPerfil(foto);
+
+        return homeDto;
     }
     
 }
