@@ -30,7 +30,7 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
 
     @Override
     public String validarUsuario(String correo, String cotrasenia) {
-        Boolean success = false;
+        Integer success = 0;
         String message = "El usuario no existe";
         try {
 
@@ -41,12 +41,12 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
             String[] usuario = user.split(",");
 
             if (usuario[2].equals(cotrasenia)) {
-                success = true;
+                success = Integer.parseInt(usuario[0]);
                 message = "Usuario validado";
                 return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);
             }else{
                 message = "La contraseña no coincide con el correo";
-                return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);
+                return String.format("{\"success\":%s,\"message\":\"%s\"}",success.toString(),message);
             }
         }  
         return String.format("{\"success\":%s,\"message\":\"%s\"}",success,message);

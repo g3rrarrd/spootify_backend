@@ -2,6 +2,7 @@ package com.spootify.backend_spootify.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,16 @@ public class Podcast_Controller {
     @GetMapping("/buscar")
     public podcastDto buscarPodcast(@RequestParam int idPodcast,@RequestParam int idUsuario){
         return this.psi.traerPodcast(idPodcast, idUsuario);
+    }
+
+    @PostMapping("/follow")
+    public Boolean seguirPodcast(@RequestParam int idPodcast,@RequestParam int idUsuario){
+        return this.psi.seguirPodcast(idPodcast, idUsuario);
+    }
+
+    @PostMapping("/unfollow")
+    public Boolean dejarSeguirPodcast(@RequestParam int idPodcast,@RequestParam int idUsuario){
+        return this.psi.dejarSeguirPocast(idPodcast, idUsuario);
     }
 
 }

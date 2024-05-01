@@ -22,6 +22,16 @@ public class Canciones_Controller {
     public CancionVistaDto obtenerCancion(@RequestParam int idCancion, @RequestParam int idUsuario) {
         return csi.traerCancion(idCancion, idUsuario);
     }
+
+    @PostMapping("/follow")
+    public boolean seguirAlbum(@RequestParam int idCancion, @RequestParam int idUsuario){
+        return this.csi.seguirCancion(idCancion, idUsuario);
+    }
+
+    @PostMapping("/unfollow")
+    public boolean dejarSeguirAlbum(@RequestParam int idCancion, @RequestParam int idUsuario){
+        return this.csi.seguirCancion(idCancion, idUsuario);
+    }
     
     @PostMapping("/play")
     public boolean playSong(@RequestParam int idUsuario, @RequestParam int idMedia){
