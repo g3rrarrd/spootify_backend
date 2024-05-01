@@ -15,6 +15,6 @@ public class homeViewDto {
 
     private List<caratulaPlaylistDto> tops;
 
-    private List<podcasterDto> podcasters;
+    private List<caratulaPlaylistDto> podcasts;
     
 }

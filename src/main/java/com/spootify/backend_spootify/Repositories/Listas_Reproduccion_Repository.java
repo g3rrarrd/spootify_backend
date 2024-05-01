@@ -96,7 +96,32 @@ List<Object[]> getListaCancionesPlaylist(@Param("id")int id);
                 "    INNER JOIN TBL_USUARIO_ESTANDAR F ON E.ID_HISTORIAL_REPRODUCCION = F.ID_HISTORIAL_DE_REPRODUCCION\r\n" + //
                 "    WHERE F.ID_USUARIO = 35\r\n" + //
                 ") subquery\r\n" + //
-                "WHERE row_num = 1 AND ROWNUM <= 10;", nativeQuery = true)
+                "WHERE row_num = 1 AND ROWNUM <= 10", nativeQuery = true)
 List<Object[]> getCancionesRecientes(@Param("id")int id);
+
+@Query(value = "SELECT A.ID_LISTA_REPRODUCCION, C.NOMBRE_LISTA_REPRODUCCION, C.URL_PORTADA_LISTA, \r\n" + //
+                "        C.DESCRIPCION\r\n" + //
+                "FROM TBL_LISTAS_SEGUIDAS A\r\n" + //
+                "INNER JOIN TBL_USUARIOS B\r\n" + //
+                "ON (A.ID_USUARIO = B.ID_USUARIO)\r\n" + //
+                "INNER JOIN TBL_LISTAS_REPRODUCCION C\r\n" + //
+                "ON (A.ID_LISTA_REPRODUCCION = C.ID_LISTA_REPRODUCCION)\r\n" + //
+                "WHERE (C.ID_TIPO_LISTA = 2 AND A.ID_USUARIO = :id)", nativeQuery = true)
+List<Object[]> getDailyMixs(@Param("id")int id);
+
+@Query(value = "SELECT B.ID_LISTA_REPRODUCCION, B.NOMBRE_LISTA_REPRODUCCION, B.URL_PORTADA_LISTA,\r\n" + //
+                "    B.DESCRIPCION\r\n" + //
+                "FROM TBL_LISTAS_REPRODUCCION B\r\n" + //
+                "WHERE (B.ID_LISTA_REPRODUCCION = 1)\r\n" + //
+                "UNION\r\n" + //
+                "SELECT B.ID_LISTA_REPRODUCCION, B.NOMBRE_LISTA_REPRODUCCION, B.URL_PORTADA_LISTA,\r\n" + //
+                "    B.DESCRIPCION\r\n" + //
+                "FROM TBL_LISTAS_REPRODUCCION B\r\n" + //
+                "INNER JOIN TBL_TOPS A\r\n" + //
+                "ON(B.ID_LISTA_REPRODUCCION = A.ID_LISTA_REPRODUCCION)\r\n" + //
+                "INNER JOIN TBL_USUARIOS C\r\n" + //
+                "ON(C.ID_PAIS = A.ID_PAIS)\r\n" + //
+                "WHERE (C.ID_USUARIO = 35)", nativeQuery = true)
+List<Object[]> getTops(@Param("id")int id);
 
 }

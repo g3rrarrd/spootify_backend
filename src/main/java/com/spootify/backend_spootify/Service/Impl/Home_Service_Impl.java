@@ -21,6 +21,7 @@ import com.spootify.backend_spootify.Dtos.homeViewDto;
 import com.spootify.backend_spootify.Dtos.listaReproduccionDto;
 import com.spootify.backend_spootify.Dtos.podcasterDto;
 import com.spootify.backend_spootify.OracleData.oraData;
+import com.spootify.backend_spootify.Repositories.Biblioteca_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
 import com.spootify.backend_spootify.Repositories.Listas_Reproduccion_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
@@ -37,6 +38,9 @@ public class Home_Service_Impl implements Home_Service{
 
     @Autowired
     Listas_Reproduccion_Repository listas;
+
+    @Autowired
+    Biblioteca_Repository biblioteca;
 
     @Override
     public homeDto traerHome(int id) {
@@ -228,11 +232,62 @@ public class Home_Service_Impl implements Home_Service{
 
             listaCanciones.add(playlist);
         }
+
+        List<Object[]> dailyMixs = listas.getDailyMixs(id);
+        //Metodo para Obtener los daily mix seguidos
+        List<caratulaPlaylistDto> listaMix = new LinkedList<>();
+        for (Object obj : dailyMixs) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_media = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_media);
+            playlist.setNombrePlaylist((String) songInfo[1]);
+            playlist.setPortadaPlaylist((String) songInfo[2]); 
+            playlist.setDescripcion((String) songInfo[3]); 
+
+            listaMix.add(playlist);
+        }
+
+        List<Object[]> tops = listas.getTops(id);
+        //Metodo para Obtener los tops
+        List<caratulaPlaylistDto> listasTops = new LinkedList<>();
+        for (Object obj : tops) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_media = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_media);
+            playlist.setNombrePlaylist((String) songInfo[1]);
+            playlist.setPortadaPlaylist((String) songInfo[2]); 
+            playlist.setDescripcion((String) songInfo[3]); 
+
+            listasTops.add(playlist);
+        }
+
+        List<Object[]> podcasts = biblioteca.getPodcastsByIdUser(id);
+        //Metodo para Obtener los podcasta a los que sigue el usuario
+        List<caratulaPlaylistDto> listasPodcasts = new LinkedList<>();
+        for (Object obj : podcasts) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_media = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_media);
+            playlist.setNombrePlaylist((String) songInfo[1]);
+            playlist.setPortadaPlaylist((String) songInfo[2]); 
+            playlist.setDescripcion((String) songInfo[3]); 
+
+            listasPodcasts.add(playlist);
+        }
         String foto = ur.urlFotoPerfil(id);
 
         homeViewDto homeDto = new homeViewDto();
         homeDto.setCancionesRecientes(listaCanciones);
         homeDto.setFotoPerfil(foto);
+        homeDto.setMixSeguidos(listaMix);
+        homeDto.setTops(listasTops);
+        homeDto.setPodcasts(listasPodcasts);
 
         return homeDto;
     }

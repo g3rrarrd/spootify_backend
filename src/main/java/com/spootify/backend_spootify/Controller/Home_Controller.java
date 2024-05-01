@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spootify.backend_spootify.Dtos.homeDto;
+import com.spootify.backend_spootify.Dtos.homeViewDto;
+import com.spootify.backend_spootify.Models.Albumes;
 import com.spootify.backend_spootify.Service.Impl.Home_Service_Impl;
 
 @RestController
@@ -19,6 +21,11 @@ public class Home_Controller {
     @GetMapping("/buscar")
     public homeDto traerHome(@RequestParam int idUsuario){
         return this.hsi.traerHome(idUsuario);
+    }
+
+    @GetMapping("/inicio")
+    public homeViewDto buscarAlbum(@RequestParam int id){
+        return this.hsi.getHome(id);
     }
 
 }

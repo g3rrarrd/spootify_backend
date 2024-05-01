@@ -127,7 +127,9 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             cancion.setColor((String) songInfo[4]);
 
             canciones.add(cancion);
+            
         }
+
         Object[] playlistView = listas.getPlaylistView(id);
         playlistDto playlist = new playlistDto();
         for (Object obj : playlistView) {
