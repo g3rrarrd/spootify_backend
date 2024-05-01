@@ -3,6 +3,7 @@ package com.spootify.backend_spootify.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,9 @@ public class Canciones_Controller {
         return csi.traerCancion(idCancion, idUsuario);
     }
     
+    @PostMapping("/play")
+    public boolean playSong(@RequestParam int idUsuario, @RequestParam int idMedia){
+        return this.csi.playSong(idUsuario, idMedia);
+    }
 
 }

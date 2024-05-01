@@ -52,5 +52,10 @@ public interface Canciones_Repository extends JpaRepository<Canciones, Integer>{
     "WHERE id_lista_reproduccion = :idPlaylist)", nativeQuery = true)
     List<Object[]> obtenerCancionesNotInPlaylist(@Param("idPlaylist") int idPlaylist);
 
+    @Query(value = "SELECT ID_HISTORIAL_DE_REPRODUCCION \r\n" + //
+                "FROM TBL_USUARIO_ESTANDAR\r\n" + //
+                "WHERE (ID_USUARIO = :id)", 
+                nativeQuery = true)
+    int getHistorial(@Param("id")int id);
 
 }

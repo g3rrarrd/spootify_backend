@@ -1,5 +1,7 @@
 package com.spootify.backend_spootify.Service.Impl;
 
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,9 +12,11 @@ import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
 import com.spootify.backend_spootify.Dtos.CancionDtoMin;
 import com.spootify.backend_spootify.Dtos.CancionVistaDto;
 import com.spootify.backend_spootify.Dtos.CreditosDto;
+import com.spootify.backend_spootify.Repositories.Albumes_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Canciones_Service;
+import com.spootify.backend_spootify.OracleData.oraData;
 
 @Service
 public class Canciones_Service_Impl implements Canciones_Service{
@@ -22,6 +26,7 @@ public class Canciones_Service_Impl implements Canciones_Service{
 
     @Autowired
     Usuario_Repository usuario_Repository;
+
 
     @Override
     public List<CancionDtoMin> traerCancionesParaAgregar(int idPlaylist) {
@@ -114,6 +119,34 @@ public class Canciones_Service_Impl implements Canciones_Service{
         return null;
        }
     }
+
+    @Override
+    public Boolean playSong(int idUsuario, int idMedia) {
+         try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false);
+            if(canciones_Repository.existsById(idMedia) && usuario_Repository.existsById(idUsuario)){
+                
+                int historial = canciones_Repository.getHistorial(idUsuario);
+
+                PreparedStatement playSong = conn.prepareStatement("INSERT INTO tbl_historial_canciones (id_historial_reproduccion, id_media, fecha_reproduccion) VALUES (?, ?, SYSDATE)");
+                
+                playSong.setInt(1, historial);
+                playSong.setInt(2, idMedia);
+
+                playSong.executeUpdate() ;
+                conn.commit();
+                conn.close();
+                return true;
+            }
+            conn.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     
 }

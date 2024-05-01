@@ -36,7 +36,7 @@ public class Listas_Reproduccion_Controller {
     }
 
     @GetMapping("/playlistsByid")
-    public playlistDto getPlaylistViewById(@RequestParam int id){
+    public playlistDto getPlaylistViewById(@RequestParam int id, @RequestParam int idUsuario){
         return this.lri.getPlaylistById(id);
     }
 
@@ -49,4 +49,6 @@ public class Listas_Reproduccion_Controller {
     public Boolean agregarCancion(@RequestParam int idCancion, @RequestParam int idPlaylist){
         return this.lri.addSongToPlaylist(idCancion, idPlaylist);
     }
+
+    
 }

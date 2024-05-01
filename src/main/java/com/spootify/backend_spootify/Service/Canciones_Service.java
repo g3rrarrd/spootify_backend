@@ -11,4 +11,6 @@ public interface Canciones_Service {
 
     public List<CancionDtoMin> traerCancionesParaAgregar(int idPlaylist);
 
+    public Boolean playSong(int idUsuario, int idMedia);
+
 }
