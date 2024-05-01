@@ -2,15 +2,12 @@ package com.spootify.backend_spootify.Repositories;
 
 import java.util.List;
 
-import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spootify.backend_spootify.Models.Albumes;
-
-import jakarta.transaction.Transactional;
 
 public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
 
@@ -32,7 +29,7 @@ public interface Albumes_Repository extends JpaRepository<Albumes, Integer>{
     @Query(value = "select sum(b.duracion_media) as duracion_album from tbl_canciones a inner join tbl_media b on(a.id_cancion = b.id_media) where a.id_album = :id", nativeQuery = true)
     int obtenerDuracion(@Param("id")int id);
 
-    @Query(value = "select color from tbl_albumes where id_album = :id", nativeQuery = true)
+    @Query(value = "select b.valor_hexadecimal as color from tbl_albumes a inner join tbl_colores b on(a.id_color = b.id_color) where id_album = :id", nativeQuery = true)
     String obtenerColor(@Param("id")int id);
 
     @Query(value = "select b.nombre_lanzamiento from tbl_albumes a inner join tbl_tipo_lanzamiento b on (a.id_tipo_lanzamiento = b.id_tipo_lanzamiento) where a.id_album = :id", nativeQuery = true)

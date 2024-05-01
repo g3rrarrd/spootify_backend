@@ -51,7 +51,7 @@ public class Podcasts_Service_Impl implements Podcasts_Service{
         try {
             
             Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
-            PreparedStatement psInfo = conn.prepareStatement("select  nombre_podcast, nombre_usuario, a.descripcion_podcast, color, url_portada_podcast from tbl_podcasts a inner join tbl_usuarios b on a.id_podcaster = b.id_usuario where a.id_podcast = ?");
+            PreparedStatement psInfo = conn.prepareStatement("select nombre_podcast, nombre_usuario, a.descripcion_podcast, c.valor_hexadecimal as color, url_portada_podcast from tbl_podcasts a inner join tbl_usuarios b on a.id_podcaster = b.id_usuario inner join tbl_colores c on a.id_color = c.id_color where a.id_podcast = ?");
             psInfo.setInt(1, id);
             ResultSet rsInfo = psInfo.executeQuery();
             podcastDto podcast = new podcastDto();
