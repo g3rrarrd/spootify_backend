@@ -16,6 +16,7 @@ import com.spootify.backend_spootify.Dtos.podcastDto;
 import com.spootify.backend_spootify.Objects.Funciones;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Podcasts_Repository;
+import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Service.Podcasts_Service;
 
 @Service
@@ -23,6 +24,9 @@ public class Podcasts_Service_Impl implements Podcasts_Service{
 
     @Autowired
     Podcasts_Repository pr;
+
+    @Autowired
+    Usuario_Repository usuario_Repository;
 
     @Override
     public podcastDto traerPodcast(int idPodcast, int idUsuario) {
@@ -153,4 +157,58 @@ public class Podcasts_Service_Impl implements Podcasts_Service{
             return null;
         }
     }
+
+    @Override
+    public Boolean seguirPodcast(int idPodcast, int idUsuario) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false);
+            if(pr.existsById(idPodcast) && usuario_Repository.existsById(idUsuario)){
+                PreparedStatement psSeguirAlbumes = conn.prepareStatement("insert into tbl_seguidores values(?,?,sysdate)");
+                
+                int idPodcaster = pr.findById(idPodcast).get().getPodcaster().getIdUsuario();
+
+                psSeguirAlbumes.setInt(1, idUsuario);
+                psSeguirAlbumes.setInt(2, idPodcaster);
+
+                psSeguirAlbumes.executeUpdate() ;
+                conn.commit();
+                conn.close();
+                return true;
+            }
+            conn.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean dejarSeguirPocast(int idPodcast, int idUsuario) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false);
+            if(pr.existsById(idPodcast) && usuario_Repository.existsById(idUsuario)){
+                PreparedStatement psDejarSeguirAlbumes = conn.prepareStatement("delete from tbl_seguidores where id_usuario_seguidor=? and id_usuario_seguido=?");
+                
+                int idPodcaster = pr.findById(idPodcast).get().getPodcaster().getIdUsuario();
+                
+                psDejarSeguirAlbumes.setInt(1, idUsuario);
+                psDejarSeguirAlbumes.setInt(2, idPodcaster);
+
+                psDejarSeguirAlbumes.executeUpdate() ;
+                conn.commit();
+                conn.close();
+                return true;
+            }
+            conn.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
 }
