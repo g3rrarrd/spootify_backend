@@ -2,7 +2,6 @@ package com.spootify.backend_spootify.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spootify.backend_spootify.Models.Podcasts;
 

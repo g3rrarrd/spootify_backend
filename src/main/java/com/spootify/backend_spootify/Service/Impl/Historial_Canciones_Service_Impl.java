@@ -63,8 +63,8 @@ public class Historial_Canciones_Service_Impl implements Historial_Canciones_Ser
             while (rsCanciones.next()) {
                 CancionDtoMin cancion = new CancionDtoMin();
 
-                cancion.setIdCancion(rsCanciones.getString(1));
-                cancion.setNombreCancion(rsCanciones.getString(2));
+                cancion.setId(rsCanciones.getString(1));
+                cancion.setNombre(rsCanciones.getString(2));
                 cancion.setArtistaCancion(rsCanciones.getString(3));;
                 cancion.setPortada(rsCanciones.getString(4));
 
