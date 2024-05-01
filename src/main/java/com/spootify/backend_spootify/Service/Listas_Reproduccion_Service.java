@@ -20,4 +20,6 @@ public interface Listas_Reproduccion_Service {
     public Boolean crarPlaylist(String nombrePlaylist, String descripcion);
 
     public playlistDto getPlaylistById(int id);
+
+    public Boolean addSongToPlaylist(int idCancion, int idPlaylist);
 }

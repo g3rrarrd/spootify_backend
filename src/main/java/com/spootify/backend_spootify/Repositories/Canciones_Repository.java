@@ -40,4 +40,17 @@ public interface Canciones_Repository extends JpaRepository<Canciones, Integer>{
     @Query(value = "select a.primer_nombre ||' '|| a.segundo_nombre ||' '||a.apellido as nombre_escritor from tbl_productores a left join tbl_creditos b on(a.id_credito = b.id_credito) where b.id_cancion=:id", nativeQuery = true)
     List<String> obtenerProductores(@Param("id")int id);
 
+    @Query(value = "SELECT a.id_cancion, c.nombre_media, d.nombre_usuario, e.portada FROM tbl_canciones a " +
+    "INNER JOIN tbl_media c ON (a.id_cancion = c.id_media) " +
+    "INNER JOIN tbl_usuarios d ON (a.id_artista = d.id_usuario) " + 
+    "INNER JOIN tbl_albumes e ON (a.id_album = e.id_album) " +
+    "WHERE a.id_cancion NOT IN (SELECT a.id_cancion FROM tbl_listas_y_canciones a " +
+    "INNER JOIN tbl_canciones b ON (a.id_cancion = b.id_cancion) " +
+    "INNER JOIN tbl_media c ON (b.id_cancion = c.id_media) " +
+    "INNER JOIN tbl_usuarios d ON (b.id_artista = d.id_usuario) " +
+    "INNER JOIN tbl_albumes e ON (b.id_album = e.id_album) " +
+    "WHERE id_lista_reproduccion = :idPlaylist)", nativeQuery = true)
+    List<Object[]> obtenerCancionesNotInPlaylist(@Param("idPlaylist") int idPlaylist);
+
+
 }

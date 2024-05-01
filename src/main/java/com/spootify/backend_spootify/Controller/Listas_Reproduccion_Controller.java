@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spootify.backend_spootify.Dtos.playlistDto;
+import com.spootify.backend_spootify.Dtos.CancionDtoMin;
 import com.spootify.backend_spootify.Dtos.caratulaPlaylistDto;
+import com.spootify.backend_spootify.Service.Impl.Canciones_Service_Impl;
 import com.spootify.backend_spootify.Service.Impl.Listas_Reproduccion_Impl;
 
 @RestController
@@ -19,6 +21,9 @@ public class Listas_Reproduccion_Controller {
 
     @Autowired
     Listas_Reproduccion_Impl lri;
+
+    @Autowired
+    Canciones_Service_Impl Csi;
 
     @GetMapping("/playlist")
     public playlistDto obtenerPlaylist(){
@@ -33,5 +38,15 @@ public class Listas_Reproduccion_Controller {
     @GetMapping("/playlistsByid")
     public playlistDto getPlaylistViewById(@RequestParam int id){
         return this.lri.getPlaylistById(id);
+    }
+
+    @GetMapping("/getSongsAddToPlaylist")
+    public List<CancionDtoMin> getSongsAddToPlaylist(@RequestParam int idPlaylist){
+        return this.Csi.traerCancionesParaAgregar(idPlaylist);
+    }
+
+    @GetMapping("/addSongToPlaylist")
+    public Boolean agregarCancion(@RequestParam int idCancion, @RequestParam int idPlaylist){
+        return this.lri.addSongToPlaylist(idCancion, idPlaylist);
     }
 }

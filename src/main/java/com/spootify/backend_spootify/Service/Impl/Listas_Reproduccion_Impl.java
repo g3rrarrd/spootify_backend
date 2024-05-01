@@ -1,6 +1,8 @@
 package com.spootify.backend_spootify.Service.Impl;
 
     import java.math.BigDecimal;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.spootify.backend_spootify.Dtos.caratulaCancionDto;
 import com.spootify.backend_spootify.Dtos.caratulaPlaylistDto;
 import com.spootify.backend_spootify.Dtos.playlistDto;
+import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Listas_Reproduccion_Repository;
 import com.spootify.backend_spootify.Service.Listas_Reproduccion_Service;
     
@@ -144,6 +147,28 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
         playlist.setCanciones(canciones);
         //playlist.setNombrePlaylist(playlistView);
         return playlist;
+    }
+
+
+
+    @Override
+    public Boolean addSongToPlaylist(int idCancion, int idPlaylist) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false); 
+
+            PreparedStatement ps = conn.prepareStatement("insert into tbl_listas_y_canciones values(?,?)");
+            ps.setInt(1, idPlaylist);
+            ps.setInt(2, idCancion);
+
+            ps.executeUpdate();
+            conn.commit();
+            conn.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
    

@@ -1,11 +1,13 @@
 package com.spootify.backend_spootify.Service.Impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
+import com.spootify.backend_spootify.Dtos.CancionDtoMin;
 import com.spootify.backend_spootify.Dtos.CancionVistaDto;
 import com.spootify.backend_spootify.Dtos.CreditosDto;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
@@ -20,6 +22,30 @@ public class Canciones_Service_Impl implements Canciones_Service{
 
     @Autowired
     Usuario_Repository usuario_Repository;
+
+    @Override
+    public List<CancionDtoMin> traerCancionesParaAgregar(int idPlaylist) {
+        try {
+
+            List<Object[]> cancionesTraidas = canciones_Repository.obtenerCancionesNotInPlaylist(idPlaylist);
+
+            List<CancionDtoMin> cancionesEnviar = new LinkedList<CancionDtoMin>();
+
+            for (Object[] cancion : cancionesTraidas) {
+                CancionDtoMin cancionDto = new CancionDtoMin();
+                cancionDto.setIdCancion(cancion[0].toString());
+                cancionDto.setNombreCancion(cancion[1].toString());
+                cancionDto.setArtistaCancion(cancion[2].toString());
+                cancionDto.setPortada(cancion[3].toString());
+                cancionesEnviar.add(cancionDto);
+            }
+
+            return cancionesEnviar;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public CancionVistaDto traerCancion(int idCancion, int idUsuario) {
@@ -88,5 +114,6 @@ public class Canciones_Service_Impl implements Canciones_Service{
         return null;
        }
     }
+
     
 }
