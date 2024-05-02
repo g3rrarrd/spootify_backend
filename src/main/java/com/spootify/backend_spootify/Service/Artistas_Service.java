@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
+import com.spootify.backend_spootify.Dtos.artistViewDto;
 
 public interface Artistas_Service {
     
@@ -13,4 +14,6 @@ public interface Artistas_Service {
     public Map<String, String> obtenerDataArtista(int id);
     
     public List<ArtistaDtoMin> obtenerTodosRegister();
+
+    public artistViewDto getArtist(int idUsuario, int id);
 }

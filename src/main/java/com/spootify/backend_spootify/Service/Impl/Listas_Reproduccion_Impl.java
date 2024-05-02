@@ -35,9 +35,9 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             caratulaCancionDto cancion = new caratulaCancionDto();
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
-            cancion.setNombreCancion((String) songInfo[1]);
-            cancion.setPortadaCancion((String) songInfo[2]);
-            cancion.setArtistaCancion((String) songInfo[3]);
+            cancion.setNombreCancion((String) songInfo[3]);
+            cancion.setPortadaCancion((String) songInfo[4]);
+            cancion.setArtistaCancion((String) songInfo[5]);
 
             canciones.add(cancion);
         }
@@ -109,13 +109,13 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
         throw new UnsupportedOperationException("Unimplemented method 'crarPlaylist'");
     }
 
-    @Override
-    public playlistDto getPlaylistById(int id) {
-        List<Object[]> playlistTop = listas.getListaCancionesPlaylist(id);
+    public List<caratulaCancionDto> getSongsById(int id){
+
+        List<Object[]> songsPlaylist = listas.getListaCancionesPlaylist(id);
 
         //Metodo para Obtener Canciones de Playlist
         List<caratulaCancionDto> canciones = new LinkedList<>();
-        for (Object obj : playlistTop) {
+        for (Object obj : songsPlaylist) {
             Object[] songInfo = (Object[]) obj; 
             System.out.println(songInfo);
             caratulaCancionDto cancion = new caratulaCancionDto();
@@ -129,9 +129,58 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             canciones.add(cancion);
             
         }
+        return canciones;
+    }
+
+    public List<caratulaCancionDto> getTop50Songs(int id){
+
+        List<Object[]> playlistTop = listas.getCancionesMasEscuchadas();
+
+        //Metodo para Ontener Canciones de Playlist
+        List<caratulaCancionDto> canciones = new LinkedList<>();
+        for (Object obj : playlistTop) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaCancionDto cancion = new caratulaCancionDto();
+            BigDecimal id_cancion = (BigDecimal) songInfo[0];
+            cancion.setId_cancion(id_cancion);
+            cancion.setNombreCancion((String) songInfo[3]);
+            cancion.setPortadaCancion((String) songInfo[4]);
+            cancion.setArtistaCancion((String) songInfo[5]);
+
+            canciones.add(cancion);
+        }
+        return canciones;
+    }
+
+    public List<caratulaCancionDto> getTopCountrySongs(int id){
+
+        List<Object[]> playlistTop = listas.getSongsByIdCountry(id);
+
+        //Metodo para Ontener Canciones de Playlist
+        List<caratulaCancionDto> canciones = new LinkedList<>();
+        for (Object obj : playlistTop) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaCancionDto cancion = new caratulaCancionDto();
+            BigDecimal id_cancion = (BigDecimal) songInfo[0];
+            cancion.setId_cancion(id_cancion);
+            cancion.setNombreCancion((String) songInfo[3]);
+            cancion.setPortadaCancion((String) songInfo[4]);
+            cancion.setArtistaCancion((String) songInfo[5]);
+
+            canciones.add(cancion);
+        }
+        return canciones;
+    }
+
+
+    @Override
+    public playlistDto getPlaylistById(int id) {
 
         Object[] playlistView = listas.getPlaylistView(id);
         playlistDto playlist = new playlistDto();
+        BigDecimal tipoLista = BigDecimal.ZERO;
         for (Object obj : playlistView) {
             Object[] songInfo = (Object[]) obj; // Convertir el objeto en un array de objetos
 
@@ -144,9 +193,17 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             BigDecimal guardados = (BigDecimal) songInfo[6];
             playlist.setGuardados(guardados);
             playlist.setFotoUsuario((String) songInfo[5]);
-        
+            tipoLista = (BigDecimal) songInfo[7];
         }
-        playlist.setCanciones(canciones);
+        int intValue = tipoLista.intValue();
+        if(id == 1){
+            playlist.setCanciones(getTop50Songs(id));
+        } else if (id != 1 && intValue==1) {
+            playlist.setCanciones(getTopCountrySongs(id));
+        } else {
+            playlist.setCanciones(getSongsById(id));
+        }
+        
         //playlist.setNombrePlaylist(playlistView);
         return playlist;
     }
