@@ -17,4 +17,6 @@ public class caratulaPlaylistDto {
 
     BigDecimal cantidadCanciones;
 
+    String tipoLanzamiento;
+
 }

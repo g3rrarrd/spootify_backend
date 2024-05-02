@@ -45,11 +45,13 @@ public interface Artistas_Repository extends JpaRepository<Artistas, Integer>{
                 "FETCH FIRST 5 ROWS ONLY", nativeQuery = true)
     List<Object[]> getPopularSongs(@Param("id")int id);
 
-    @Query(value = "SELECT C.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, TO_CHAR(C.FECHA_LANZAMIENTO, 'YYYY') FECHA\r\n" + //
-                "FROM TBL_ALBUMES C\r\n" + //
-                "WHERE ID_USUARIO = :id\r\n" + //
-                "ORDER BY FECHA DESC\r\n" + //
-                "fetch first 1 rows only", nativeQuery = true)
+    @Query(value = "SELECT C.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, TO_CHAR(C.FECHA_LANZAMIENTO, 'YYYY') FECHA, D.NOMBRE_LANZAMIENTO "+
+        "FROM TBL_ALBUMES C "+
+        "LEFT JOIN TBL_TIPO_LANZAMIENTO D " +
+        "ON(C.ID_TIPO_LANZAMIENTO=D.ID_TIPO_LANZAMIENTO) " +
+        "WHERE ID_USUARIO = :id " +
+        "ORDER BY FECHA DESC " +
+        "fetch first 1 rows only", nativeQuery = true)
     Object[] getLastPost(@Param("id")int id);
 
     @Query(value = "select  a.id_lista_reproduccion,\r\n" + //
@@ -75,26 +77,37 @@ public interface Artistas_Repository extends JpaRepository<Artistas, Integer>{
                 "fetch first 4 rows only", nativeQuery = true)
     List<Object[]> getPlaylistArtist(@Param("id")int id);
 
-    @Query(value = "SELECT ID_ALBUM, NOMBRE_ALBUM, PORTADA, FECHA\r\n" + //
-                "FROM (\r\n" + //
-                "    SELECT B.ID_ARTISTA, B.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, TO_CHAR(C.FECHA_LANZAMIENTO, 'YYYY') FECHA,\r\n" + //
-                "            COUNT(A.ID_HISTORIAL_REPRODUCCION) REPRODUCCIONES\r\n" + //
-                "    FROM TBL_HISTORIAL_MEDIA A\r\n" + //
-                "    INNER JOIN TBL_CANCIONES B\r\n" + //
-                "    ON (A.ID_MEDIA = B.ID_CANCION)\r\n" + //
-                "    INNER JOIN TBL_ALBUMES C\r\n" + //
-                "    ON (B.ID_ALBUM = C.ID_ALBUM)\r\n" + //
-                "    WHERE ID_ARTISTA = 1\r\n" + //
-                "    GROUP BY B.ID_ARTISTA, B.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, C.FECHA_LANZAMIENTO\r\n" + //
-                "    ORDER BY REPRODUCCIONES DESC\r\n" + //
-                "    )\r\n" + //
-                "MINUS\r\n" + //
-                "SELECT ID_ALBUM, NOMBRE_ALBUM, PORTADA, TO_CHAR(FECHA_LANZAMIENTO, 'YYYY') AS FECHA\r\n" + //
-                "FROM TBL_ALBUMES\r\n" + //
-                "WHERE ID_USUARIO = 1 AND FECHA_LANZaMIENTO = (SELECT MAX(FECHA_LANZAMIENTO) \r\n" + //
-                "                                            FROM TBL_ALBUMES\r\n" + //
-                "                                            WHERE(ID_USUARIO = 1))", nativeQuery = true)
+    @Query(value = "SELECT ID_ALBUM, NOMBRE_ALBUM, PORTADA, FECHA, NOMBRE_LANZAMIENTO " +  
+        "FROM"+
+        "(SELECT B.ID_ARTISTA, B.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, "+
+        "TO_CHAR(C.FECHA_LANZAMIENTO, 'YYYY') FECHA, "+
+        "COUNT(A.ID_HISTORIAL_REPRODUCCION) REPRODUCCIONES, "+
+        "D.NOMBRE_LANZAMIENTO "+
+        "FROM TBL_HISTORIAL_MEDIA A "+
+        "INNER JOIN TBL_CANCIONES B "+
+        "ON (A.ID_MEDIA = B.ID_CANCION) "+
+        "INNER JOIN TBL_ALBUMES C "+
+        "ON (B.ID_ALBUM = C.ID_ALBUM) "+
+        "INNER JOIN TBL_TIPO_LANZAMIENTO D "+
+        "ON (C.ID_TIPO_LANZAMIENTO = D.ID_TIPO_LANZAMIENTO) "+
+        "WHERE ID_ARTISTA = 1 "+
+        "GROUP BY B.ID_ARTISTA, B.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, C.FECHA_LANZAMIENTO, D.NOMBRE_LANZAMIENTO "+
+        "ORDER BY REPRODUCCIONES DESC) "+
+        "MINUS "+
+        "SELECT C.ID_ALBUM, C.NOMBRE_ALBUM, C.PORTADA, TO_CHAR(C.FECHA_LANZAMIENTO, 'YYYY') FECHA, D.NOMBRE_LANZAMIENTO "+
+        "FROM TBL_ALBUMES C "+
+        "LEFT JOIN TBL_TIPO_LANZAMIENTO D "+
+        "ON(C.ID_TIPO_LANZAMIENTO=D.ID_TIPO_LANZAMIENTO) "+
+        "WHERE ID_USUARIO = 1 AND FECHA_LANZAMIENTO = (SELECT MAX(FECHA_LANZAMIENTO) "+
+                                                    "FROM TBL_ALBUMES "+
+                                                    "WHERE(ID_USUARIO = 1))", nativeQuery = true)
     List<Object[]> getPopularPost(@Param("id")int id);
 
+    @Query(value = "select a.id_merch, a.nombre_merch, a.descripcion_merch, a.precio_merch, a.url_imagen_merch " +
+            "from tbl_merch a " +
+            "left join tbl_artistas b " +
+            "on(a.id_artista = b.id_usuario) " +
+            "where b.id_usuario = :idArtista", nativeQuery=true)
+    List<Object[]> getMerch(@Param("idArtista")int idArtista);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spootify.backend_spootify.Dtos.ArtistaDtoMin;
+import com.spootify.backend_spootify.Dtos.MerchDto;
 import com.spootify.backend_spootify.Dtos.artistViewDto;
 import com.spootify.backend_spootify.Dtos.caratulaCancionDto;
 import com.spootify.backend_spootify.Dtos.caratulaPlaylistDto;
@@ -63,6 +64,7 @@ public class Artistas_Service_Impl implements Artistas_Service{
 
     @Override
     public artistViewDto getArtist(int idUsuario, int id) {
+
         artistViewDto artista = new artistViewDto();
         Object[] infoArtist = aRepository.getArtist(id);
         for (Object obj : infoArtist) {
@@ -87,7 +89,7 @@ public class Artistas_Service_Impl implements Artistas_Service{
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
             cancion.setNombreCancion((String) songInfo[2]);
-            cancion.setPortadaCancion((String) songInfo[3]); 
+            cancion.setPortadaCancion((String) songInfo[3]);
             BigDecimal reproducciones = (BigDecimal) songInfo[4];
             String idArtistaStr = reproducciones.toString();
             cancion.setArtistaCancion(idArtistaStr);
@@ -108,6 +110,7 @@ public class Artistas_Service_Impl implements Artistas_Service{
             last.setNombrePlaylist((String) songInfo[1]);
             last.setPortadaPlaylist((String) songInfo[2]); 
             last.setDescripcion((String) songInfo[3]);
+            last.setTipoLanzamiento((String) songInfo[4]);
         }
         //Obtiene los lanzamientos mas populares
         List<Object[]> lanzamientos = aRepository.getPopularPost(id);
@@ -121,10 +124,25 @@ public class Artistas_Service_Impl implements Artistas_Service{
             playlist.setNombrePlaylist((String) songInfo[1]);
             playlist.setPortadaPlaylist((String) songInfo[2]); 
             playlist.setDescripcion((String) songInfo[3]);
+            playlist.setTipoLanzamiento((String) songInfo[4]);
 
             playlists.add(playlist);
         }
 
+        List<Object[]> merchList = aRepository.getMerch(id);
+        List<MerchDto> merchEnviar = new LinkedList<MerchDto>();
+
+        for (Object[] merch : merchList) {
+            MerchDto merchItem = new MerchDto();
+            merchItem.setId(merch[0].toString()); 
+            merchItem.setNombre(merch[1].toString());
+            merchItem.setDescripcion(merch[2].toString());
+            merchItem.setPrecio(merch[3].toString());
+            merchItem.setImagen("");
+            merchEnviar.add(merchItem);
+        }
+
+        artista.setMerch(merchEnviar);
         artista.setUltimoLanzamiento(last);
         artista.setLanzamientosPopulares(playlists);
 

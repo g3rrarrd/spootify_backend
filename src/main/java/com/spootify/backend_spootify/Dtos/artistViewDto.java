@@ -26,8 +26,10 @@ public class artistViewDto {
 
     private List<caratulaPlaylistDto> playlistArtista;
 
-    private Boolean seguido;
+    private List<MerchDto> merch;
 
+    private Boolean seguido;
+    
     private String color;
 
 }
