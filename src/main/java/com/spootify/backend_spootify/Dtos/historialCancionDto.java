@@ -10,6 +10,6 @@ public class historialCancionDto {
 
     private String fechaEscuchada;
 
-    private List<CancionDtoMin> canciones;
+    private List<CancionDtoMin> media;
 
 }
