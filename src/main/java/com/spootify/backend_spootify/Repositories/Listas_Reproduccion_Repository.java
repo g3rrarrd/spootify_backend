@@ -11,23 +11,71 @@ import com.spootify.backend_spootify.Models.Listas_reproduccion;
 public interface Listas_Reproduccion_Repository extends JpaRepository<Listas_reproduccion, Integer>{
         @Query(
                 
-        value = "SELECT ID_MEDIA, NOMBRE_MEDIA, PORTADA, NOMBRE_USUARIO FROM (" +
-        "WITH T AS (SELECT ID_MEDIA, COUNT(ID_MEDIA) AS REPRODUCCIONES " +
-                "FROM TBL_HISTORIAL_MEDIA " +
-                "GROUP BY ID_MEDIA) " +
-        "SELECT A.ID_MEDIA, A.NOMBRE_MEDIA, B.PORTADA, B.NOMBRE_USUARIO " +
-        "FROM TBL_MEDIA A " +
-        "INNER JOIN (SELECT A.ID_CANCION, B.PORTADA, C.NOMBRE_USUARIO " +
-                "FROM TBL_CANCIONES A " +
-                "INNER JOIN TBL_ALBUMES B " +
-                "ON (A.ID_ALBUM = B.ID_ALBUM) " +
-                "INNER JOIN TBL_USUARIOS C " +
-                "ON (A.ID_ARTISTA = C.ID_USUARIO)) B " +
-        "ON (A.ID_MEDIA=B.ID_CANCION) " +
-        "INNER JOIN T " +
-        "ON (A.ID_MEDIA = T.ID_MEDIA) " +
-        "ORDER BY T.REPRODUCCIONES DESC) " +
-        "WHERE ROWNUM <= 10",
+        value = "@Query(value = \"select  g.nombre_pais,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        d.id_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        fecha_reproduccion,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        letra_cancion,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        nombre_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        duracion_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        d.reproducciones_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        count(1) cantidad_escuchada\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"from tbl_historial_de_reproduccion a\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"inner join tbl_historial_media b\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on a.id_historial_reproduccion = b.id_historial_reproduccion\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"left join tbl_canciones c\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on b.id_media = c.id_cancion\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"left join tbl_media d\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on c.id_cancion = d.id_media\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"left join tbl_usuario_estandar e\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on a.id_historial_reproduccion = e.id_historial_de_reproduccion\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"left join tbl_usuarios f\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on e.id_usuario = f.id_usuario\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"left join tbl_paises g\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"on f.id_pais = g.id_pais\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"where   f.id_pais = :idPais and \\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        fecha_reproduccion = to_char(sysdate - 1, 'dd-MON-yy')\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"group by g.nombre_pais,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        d.id_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        fecha_reproduccion,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        letra_cancion,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        nombre_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        duracion_media,\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"        d.reproducciones_media\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"order by cantidad_escuchada desc\\r\\n" + //
+                                "\" + //\r\n" + //
+                                "                \"fetch first 50 rows only;\", nativeQuery = true)\r\n" + //
+                                "    List<Object[]> getSongsByIdCountry(@Param(\"idPais\")int id);" +
+        "WHERE ROWNUM <= 50",
         nativeQuery = true)
 List<Object[]> getCancionesMasEscuchadas();
 
@@ -123,5 +171,39 @@ List<Object[]> getDailyMixs(@Param("id")int id);
                 "ON(C.ID_PAIS = A.ID_PAIS)\r\n" + //
                 "WHERE (C.ID_USUARIO = 35)", nativeQuery = true)
 List<Object[]> getTops(@Param("id")int id);
+
+@Query(value = "select  g.nombre_pais,\r\n" + //
+                "        d.id_media,\r\n" + //
+                "        fecha_reproduccion,\r\n" + //
+                "        letra_cancion,\r\n" + //
+                "        nombre_media,\r\n" + //
+                "        duracion_media,\r\n" + //
+                "        d.reproducciones_media,\r\n" + //
+                "        count(1) cantidad_escuchada\r\n" + //
+                "from tbl_historial_de_reproduccion a\r\n" + //
+                "inner join tbl_historial_media b\r\n" + //
+                "on a.id_historial_reproduccion = b.id_historial_reproduccion\r\n" + //
+                "left join tbl_canciones c\r\n" + //
+                "on b.id_media = c.id_cancion\r\n" + //
+                "left join tbl_media d\r\n" + //
+                "on c.id_cancion = d.id_media\r\n" + //
+                "left join tbl_usuario_estandar e\r\n" + //
+                "on a.id_historial_reproduccion = e.id_historial_de_reproduccion\r\n" + //
+                "left join tbl_usuarios f\r\n" + //
+                "on e.id_usuario = f.id_usuario\r\n" + //
+                "left join tbl_paises g\r\n" + //
+                "on f.id_pais = g.id_pais\r\n" + //
+                "where   f.id_pais = :idPais and \r\n" + //
+                "        fecha_reproduccion = to_char(sysdate - 1, 'dd-MON-yy')\r\n" + //
+                "group by g.nombre_pais,\r\n" + //
+                "        d.id_media,\r\n" + //
+                "        fecha_reproduccion,\r\n" + //
+                "        letra_cancion,\r\n" + //
+                "        nombre_media,\r\n" + //
+                "        duracion_media,\r\n" + //
+                "        d.reproducciones_media\r\n" + //
+                "order by cantidad_escuchada desc\r\n" + //
+                "fetch first 50 rows only;", nativeQuery = true)
+    List<Object[]> getSongsByIdCountry(@Param("idPais")int id);
 
 }
