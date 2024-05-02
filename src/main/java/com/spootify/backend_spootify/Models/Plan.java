@@ -36,7 +36,7 @@ public class Plan {
 
     private int usuarios_admitidos;
 
-    private int duracion_plan;
+    private Integer duracion_plan;
 
     @JsonIgnore
     @OneToMany(mappedBy = "plan")

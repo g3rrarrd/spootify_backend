@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spootify.backend_spootify.Dtos.pagoDto;
 import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
 import com.spootify.backend_spootify.Service.Impl.Usuario_Estandar_Service_Impl;
 
@@ -38,5 +39,10 @@ public class Usuario_Estandar_Controller {
     @GetMapping("/obtenerNombreListas")
     public List<String> obtenerNombreListas(@RequestParam int id){
         return this.uesi.obtenerNombreListas(id);
+    }
+
+    @PostMapping("/cambiarPlan")
+    public Boolean cambiarPlan(@RequestBody pagoDto pago){
+        return this.uesi.cambiarPlan(pago);
     }
 }

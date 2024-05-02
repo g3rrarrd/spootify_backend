@@ -15,6 +15,8 @@ public class perfilDto {
 
     private int CantidadSeguidos;
 
+    private int idTipoPlan;
+
     private List<listaReproduccionDto> PlaylistCreadas;
 
 }

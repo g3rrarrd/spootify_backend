@@ -194,6 +194,7 @@ public class Usuarios_Service_Impl implements Usuarios_Service{
             perfil.setCantidadSeguidores(this.ur.numeroSeguidores(idUsuario));
             perfil.setCantidadSeguidos(this.ur.numeroSeguidos(idUsuario));
             perfil.setPlaylistCreadas(this.traerListas(idUsuario));
+            perfil.setIdTipoPlan(this.ur.obtenerPlanUsuario(idUsuario));
             
             return perfil;
 

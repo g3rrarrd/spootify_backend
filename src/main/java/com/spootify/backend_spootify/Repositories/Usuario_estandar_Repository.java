@@ -35,6 +35,9 @@ public interface Usuario_estandar_Repository extends JpaRepository<Usuario_Estan
     @Query(value = "select count(1) from tbl_tarjetas", nativeQuery = true)
     int contarTarjetas();
 
+    @Query(value = "select count(1) from tbl_facturas", nativeQuery = true)
+    int contarFacturas();
+
     @Query(value = "select id_lista_reproduccion from tbl_listas_reproduccion where id_usuario_propietario=:id and id_tipo_lista=5", nativeQuery = true)
     int obtenerIdLikedPlaylist(@Param("id")int id);
 

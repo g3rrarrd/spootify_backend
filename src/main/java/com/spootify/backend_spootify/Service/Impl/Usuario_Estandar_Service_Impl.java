@@ -10,10 +10,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spootify.backend_spootify.Dtos.pagoDto;
 import com.spootify.backend_spootify.Dtos.usuarioEstandarDto;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Genero_Repository;
 import com.spootify.backend_spootify.Repositories.Paises_Repository;
+import com.spootify.backend_spootify.Repositories.Planes_Repository;
 import com.spootify.backend_spootify.Repositories.Tipo_usuario_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_estandar_Repository;
 import com.spootify.backend_spootify.Service.Usuario_estandar_Service;
@@ -32,6 +34,9 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
 
     @Autowired
     Paises_Repository pr;
+
+    @Autowired
+    Planes_Repository plr;
 
     @Override
     public boolean crearUsuario(usuarioEstandarDto usuarioE) {
@@ -187,6 +192,48 @@ public class Usuario_Estandar_Service_Impl implements Usuario_estandar_Service{
             return false;
         }
         
+    }
+
+    @Override
+    public boolean cambiarPlan(pagoDto infoPago) {
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
+            conn.setAutoCommit(false); 
+
+            PreparedStatement psTarjeta = conn.prepareStatement("insert into tbl_tarjetas values (?, ?, ?, ?, ?)");
+            psTarjeta.setInt(1, this.uer.contarTarjetas() +1);
+            psTarjeta.setString(2, infoPago.getTarjeta());
+            psTarjeta.setDate(3, infoPago.getFechaExpiracion());
+            psTarjeta.setInt(4, infoPago.getCvv());
+            psTarjeta.setString(5, infoPago.getTitular());
+            psTarjeta.executeUpdate();
+            psTarjeta.close();
+
+            PreparedStatement psPagoPlanes = conn.prepareStatement("UPDATE tbl_pago_planes SET id_plan=?, id_tarjeta=?, fecha_inicio_plan=?, fecha_fin_plan=? where id_usuario=?");
+            psPagoPlanes.setInt(1, infoPago.getIdPlan());
+            psPagoPlanes.setInt(2, this.uer.contarTarjetas() + 1);
+            psPagoPlanes.setDate(3, Date.valueOf(LocalDate.now()));
+            psPagoPlanes.setDate(4, Date.valueOf(LocalDate.now().plusMonths(1)));
+            psPagoPlanes.setInt(5, infoPago.getIdUsuario());
+            psPagoPlanes.executeUpdate();
+            psPagoPlanes.close();
+
+            PreparedStatement psFacturas = conn.prepareStatement("INSERT INTO tbl_facturas(id_factura, id_usuario, id_plan, fecha_cobro, monto_cobrado) VALUES (?, ?, ?, sysdate, ?)");
+            psFacturas.setInt(1, this.uer.contarFacturas() + 1);
+            psFacturas.setInt(2, infoPago.getIdUsuario());
+            psFacturas.setInt(3, infoPago.getIdPlan());
+            psFacturas.setFloat(4, plr.obtenerPrecio(infoPago.getIdPlan()));
+            psFacturas.executeUpdate();
+            psFacturas.close();
+
+            conn.commit();
+            conn.close();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
