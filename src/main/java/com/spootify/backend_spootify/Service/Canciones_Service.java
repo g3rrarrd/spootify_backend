@@ -15,6 +15,6 @@ public interface Canciones_Service {
 
     public Boolean dejarSeguirCancion(int idCancion, int idUsuario);
 
-    public Boolean playSong(int idUsuario, int idMedia);
+    public Boolean playMedia(int idUsuario, int idMedia);
 
 }

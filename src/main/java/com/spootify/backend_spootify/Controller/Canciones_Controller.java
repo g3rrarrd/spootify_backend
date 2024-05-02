@@ -35,7 +35,7 @@ public class Canciones_Controller {
     
     @PostMapping("/play")
     public boolean playSong(@RequestParam int idUsuario, @RequestParam int idMedia){
-        return this.csi.playSong(idUsuario, idMedia);
+        return this.csi.playMedia(idUsuario, idMedia);
     }
 
 }

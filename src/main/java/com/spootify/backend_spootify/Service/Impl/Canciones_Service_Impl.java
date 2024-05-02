@@ -17,6 +17,7 @@ import com.spootify.backend_spootify.Dtos.CreditosDto;
 import com.spootify.backend_spootify.OracleData.oraData;
 import com.spootify.backend_spootify.Repositories.Albumes_Repository;
 import com.spootify.backend_spootify.Repositories.Canciones_Repository;
+import com.spootify.backend_spootify.Repositories.Media_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_Repository;
 import com.spootify.backend_spootify.Repositories.Usuario_estandar_Repository;
 import com.spootify.backend_spootify.Service.Canciones_Service;
@@ -29,12 +30,13 @@ public class Canciones_Service_Impl implements Canciones_Service{
     Canciones_Repository canciones_Repository;
 
     @Autowired
-    Usuario_Repository usuario_Repository;
+    Media_Repository media_Repository;
 
+    @Autowired
+    Usuario_Repository usuario_Repository;
 
     @Autowired
     Usuario_estandar_Repository usuario_Estandar_Rep;
-
 
     @Override
     public CancionVistaDto traerCancion(int idCancion, int idUsuario) {
@@ -183,11 +185,11 @@ public class Canciones_Service_Impl implements Canciones_Service{
     }
 
     @Override
-    public Boolean playSong(int idUsuario, int idMedia) {
+    public Boolean playMedia(int idUsuario, int idMedia) {
          try {
             java.sql.Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
             conn.setAutoCommit(false);
-            if(canciones_Repository.existsById(idMedia) && usuario_Repository.existsById(idUsuario)){
+            if(media_Repository.existsById(idMedia) && usuario_Repository.existsById(idUsuario)){
                 
                 int historial = canciones_Repository.getHistorial(idUsuario);
 
