@@ -48,6 +48,7 @@ public class Albumes_Service_Impl implements Albumes_Service{
                 album.setCantidadCanciones(albumes_Repository.contarCanciones(idAlbum));
                 album.setDuracionAlbum(albumes_Repository.obtenerDuracion(idAlbum));
                 album.setFollow(albumes_Repository.seSigue(idUsuario, idAlbum));
+                album.setIdArtista(albumes_Repository.obtenerIdArtista(idAlbum));
 
                 List<Object[]> cancionesTraidas = albumes_Repository.obtenerCanciones(idAlbum);
 

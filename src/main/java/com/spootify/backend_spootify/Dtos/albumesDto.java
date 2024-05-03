@@ -13,6 +13,8 @@ public class albumesDto {
     
     private String nombreArtista;
 
+    private String idArtista;
+
     private String fotoArtista;
 
     private String tipoLanzamiento;

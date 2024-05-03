@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +46,7 @@ public class Listas_Reproduccion_Controller {
         return this.Csi.traerCancionesParaAgregar(idPlaylist);
     }
 
-    @GetMapping("/addSongToPlaylist")
+    @PostMapping("/addSongToPlaylist")
     public Boolean agregarCancion(@RequestParam int idCancion, @RequestParam int idPlaylist){
         return this.lri.addSongToPlaylist(idCancion, idPlaylist);
     }
