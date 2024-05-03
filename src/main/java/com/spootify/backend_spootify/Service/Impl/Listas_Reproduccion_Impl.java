@@ -35,9 +35,9 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             caratulaCancionDto cancion = new caratulaCancionDto();
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
-            cancion.setNombreCancion((String) songInfo[3]);
-            cancion.setPortadaCancion((String) songInfo[4]);
-            cancion.setArtistaCancion((String) songInfo[5]);
+            cancion.setNombreCancion((String) songInfo[6]);
+            cancion.setPortadaCancion((String) songInfo[3]);
+            cancion.setArtistaCancion((String) songInfo[3]);
 
             canciones.add(cancion);
         }
@@ -144,9 +144,9 @@ public class Listas_Reproduccion_Impl implements Listas_Reproduccion_Service {
             caratulaCancionDto cancion = new caratulaCancionDto();
             BigDecimal id_cancion = (BigDecimal) songInfo[0];
             cancion.setId_cancion(id_cancion);
-            cancion.setNombreCancion((String) songInfo[3]);
-            cancion.setPortadaCancion((String) songInfo[4]);
-            cancion.setArtistaCancion((String) songInfo[5]);
+            cancion.setNombreCancion((String) songInfo[2]);
+            cancion.setPortadaCancion((String) songInfo[1]);
+            cancion.setArtistaCancion((String) songInfo[3]);
 
             canciones.add(cancion);
         }
