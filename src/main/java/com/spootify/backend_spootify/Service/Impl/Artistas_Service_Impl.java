@@ -138,13 +138,30 @@ public class Artistas_Service_Impl implements Artistas_Service{
             merchItem.setNombre(merch[1].toString());
             merchItem.setDescripcion(merch[2].toString());
             merchItem.setPrecio(merch[3].toString());
-            merchItem.setImagen("");
+            merchItem.setImagen(merch[4].toString());
             merchEnviar.add(merchItem);
+        }
+
+         //Obtiene las playlist donde aparece el artista
+        List<Object[]> playlistArtist = aRepository.getPlaylistArtist(id);
+        List<caratulaPlaylistDto> playlistOfArtist = new LinkedList<>();
+        for (Object obj : playlistArtist) {
+            Object[] songInfo = (Object[]) obj; 
+            
+            caratulaPlaylistDto playlist = new caratulaPlaylistDto();
+            BigDecimal id_playlist = (BigDecimal) songInfo[0];
+            playlist.setId_Playlist(id_playlist);
+            playlist.setNombrePlaylist((String) songInfo[2]);
+            playlist.setPortadaPlaylist((String) songInfo[3]); 
+            playlist.setDescripcion((String) songInfo[4]);
+
+            playlistOfArtist.add(playlist);
         }
 
         artista.setMerch(merchEnviar);
         artista.setUltimoLanzamiento(last);
         artista.setLanzamientosPopulares(playlists);
+        artista.setPlaylistArtista(playlistOfArtist);
 
         return artista;
 

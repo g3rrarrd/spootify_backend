@@ -28,7 +28,12 @@ public class Historial_Canciones_Service_Impl implements Historial_Canciones_Ser
         try {
             
             Connection conn = DriverManager.getConnection(oraData.url, oraData.userid, oraData.password);
-            PreparedStatement psHistorialC = conn.prepareStatement("select distinct to_char(fecha_reproduccion,'fmdy, dd mon yyyy') as fecha_reproduccion from tbl_historial_media a inner join tbl_usuario_estandar b on(a.id_historial_reproduccion = b.id_historial_de_reproduccion) where id_usuario =?");
+            PreparedStatement psHistorialC = conn.prepareStatement("select distinct to_char(fecha_reproduccion,'fmdy, dd mon yyyy') \r\n" + //
+                                "as fecha_reproduccion, a.fecha_reproduccion from tbl_historial_media a \r\n" + //
+                                "inner join tbl_usuario_estandar b \r\n" + //
+                                "on(a.id_historial_reproduccion = b.id_historial_de_reproduccion) \r\n" + //
+                                "where id_usuario =?\r\n" + //
+                                "order by a.fecha_reproduccion desc");
             psHistorialC.setInt(1, id);
             ResultSet rsHistorialC = psHistorialC.executeQuery();
             List<historialCancionDto> listHistorialCanciones = new LinkedList<>();
